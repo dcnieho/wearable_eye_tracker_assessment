@@ -1,0 +1,154 @@
+{
+    "screen": {
+        "which_monitor": 1,
+        "width": 121.2,
+        "viewing_distance": 100,
+        "refresh_rate": 60,
+        "resolution": [3840, 2160],
+        "units": "degFlatPos",
+        "background_color": "grey"
+    },
+
+    "instruction_text": {
+        "height": 2.0,
+        "color": "black",
+        "units": "cm"
+    },
+
+    "aruco": {
+        "dict": "DICT_4X4_250",
+        "border_bits": 1
+    },
+
+    "segment_marker": {
+        "size": 6.0,
+        "units": "deg",
+        "margin": 0.1,
+        "duration": 1.0,
+        "background_color": "white"
+    },
+
+    "setup_check": {
+        "background_color": "grey",
+        "units": "degFlatPos",
+        "background_patch": {
+            "radius": 3,
+            "color": "darkgrey"
+        },
+        "target": {
+            "outer_diameter": 0.7,
+            "inner_diameter": 0.1,
+            "outer_color": "black",
+            "inner_color": "white"
+        },
+        "positions":[
+            [0  ,  0],
+            [-15,  0],
+            [ 15,  0],
+            [0,  -10],
+            [0,   10]
+        ]
+    },
+
+    "et_sync": {
+        "segment_marker": {
+            "start_IDs": [215, 216],
+            "end_IDs": [216, 215]
+        },
+
+        "pre_post_duration": 1.5,
+        "duration": 10.0,
+        "background_color": "grey",
+        "units": "degFlatPos",
+        "background_patch": {
+            "radius": 1.5,
+            "pre_post_color": "darkgrey",
+            "color": "red"
+        },
+        "target": {
+            "outer_diameter": 0.7,
+            "inner_diameter": 0.1,
+            "outer_color": "black",
+            "inner_color": "white"
+        }
+    },
+
+    "parallax": {
+        "n_repetitions": 5,
+        "distances": [30, 200, 100],
+
+        "segment_marker": {
+            "start_IDs": [[142, 143],[144, 145],[140, 141]],
+            "end_IDs": [[143, 142],[145, 144],[141, 140]]
+        },
+
+        "markers": {
+            "files": ["markerPositions_parallax30.csv","markerPositions_parallax200.csv","markerPositions_parallax100.csv"],
+            "size": 3.5,
+            "units": "deg",
+            "margin": 0.1,
+            "background_color": "white",
+            "IDoffset": 36,
+            "replace_IDs": [14, 21],
+            "replace_ID_start": 108,
+            "replace_ID_offset": 10
+        },
+
+        "targets": {
+            "file": "targetPositions_parallax.csv",
+            "units": "degFlatPos",
+            "first_ID": 1,
+            "center_target": 1,
+            "duration": 1.0,
+            "placeholder": {
+                "color": "white",
+                "diameter": 1.0
+            },
+            "cue": {
+                "color": "red",
+                "diameter": 0.7
+            },
+            "move": {
+                "duration": 2.5,
+                "diameter": 1.5,
+                "min_duration": 1.0,
+                "move_with_acceleration": true
+            },
+            "shrink": {
+                "duration": 0.4
+            },
+            "look": {
+                "diameter_min": 0.7,
+                "diameter_max": 1.5,
+                "outer_color": "black",
+                "inner_color": "white"
+            }
+        }
+    },
+
+    "slippage": {
+        "segment_marker": {
+            "start_IDs": [[220, 221],[222, 223],[224, 225]],
+            "end_IDs": [[221, 220],[223, 222],[225, 224]]
+        },
+
+        "markers": {
+            "file": "markerPositions_slippage.csv",
+            "size": 9.5,
+            "units": "cm",
+            "margin": 0.1,
+            "background_color": "white"
+        },
+
+        "targets": {
+            "file": "targetPositions_slippage.csv",
+            "units": "degFlatPos",
+            "duration": 12.0,
+            "look": {
+                "diameter": 0.7,
+                "outer_color": "black",
+                "inner_color": "white"
+            }
+        }
+    }
+}

@@ -1,0 +1,206 @@
+{
+  "individual_markers": [
+    {
+      "__marker.Marker__": {
+        "id": 200,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 201,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 210,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 211,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 205,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 206,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    }
+  ],
+  "coding_setup": [
+    {
+      "event_type": "Sync ET Data",
+      "name": "Sync",
+      "description": "Eye tracker synchronization episode",
+      "hotkey": "s",
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 200,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 201,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 201,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 200,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "sync_setup": {
+        "get_cam_movement_method": "function",
+        "get_cam_movement_function": {
+          "parameters": {
+            "low": [
+              170,
+              60,
+              40
+            ],
+            "high": [
+              27,
+              255,
+              255
+            ],
+            "edge_cut_fac": 9
+          },
+          "module_or_file": "gazeMapper.utils.color_blob_localizer",
+          "function": "detect_blob_HSV"
+        }
+      }
+    },
+    {
+      "event_type": "Trial",
+      "name": "PSA",
+      "description": "PSA test episode",
+      "hotkey": "p",
+      "planes": {
+        "builtin.set": [
+          "validate"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 210,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 211,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 211,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 210,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "event_type": "Validate",
+      "name": "Fixation task",
+      "description": "Fixation task episode",
+      "hotkey": "f",
+      "planes": {
+        "builtin.set": [
+          "validate"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 205,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 206,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 206,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 205,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "validation_setup": {}
+    }
+  ],
+  "import_do_copy_video": false,
+  "import_source_dir_as_relative_path": true,
+  "import_known_custom_eye_trackers": [
+    "demo B"
+  ],
+  "mapped_video_make_which": {
+    "builtin.set": [
+      "et"
+    ]
+  },
+  "mapped_video_recording_colors": {
+    "et": {
+      "__config.RgbColor__": {
+        "r": 255,
+        "g": 127,
+        "b": 0
+      }
+    }
+  }
+}

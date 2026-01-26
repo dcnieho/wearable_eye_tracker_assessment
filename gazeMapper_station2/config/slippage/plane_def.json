@@ -1,0 +1,20 @@
+{
+  "type": "Target Plane 2D",
+  "marker_file": "markerPositions_slippage.csv",
+  "marker_size": 95.0,
+  "plane_size": {
+    "builtin.tuple": [
+      916.256,
+      655.0
+    ]
+  },
+  "origin": {
+    "builtin.tuple": [
+      458.128,
+      327.5
+    ]
+  },
+  "unit": "mm",
+  "target_file": "targetPosition.csv",
+  "aruco_dict": "DICT_4X4_250"
+}

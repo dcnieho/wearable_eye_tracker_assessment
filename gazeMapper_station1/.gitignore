@@ -1,0 +1,10 @@
+# Ignore everything...
+*
+
+# .. except
+!.gitignore
+!config/
+
+# Ensure we include everything under those whitelisted directories, respecting their own ignore rules
+config/**/*
+!config/**

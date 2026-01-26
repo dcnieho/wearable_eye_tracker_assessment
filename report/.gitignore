@@ -1,0 +1,7 @@
+data
+figures
+*.pdf
+
+.venv
+__pycache__
+*.pyc

@@ -1,0 +1,10 @@
+{
+  "recordings": [
+    {
+      "__session.RecordingDefinition__": {
+        "name": "et",
+        "type": "Eye Tracker"
+      }
+    }
+  ]
+}

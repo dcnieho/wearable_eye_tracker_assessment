@@ -1,0 +1,23 @@
+# Ignore everything...
+*
+
+# .. except
+!.gitignore
+!README.md
+!LICENSE
+!Protocol_station1.docx
+!Protocol_station2.docx
+!gazeMapper_station1/
+!gazeMapper_station2/
+!report/
+!stimuli/
+
+# Ensure we include everything under those whitelisted directories, respecting their own ignore rules
+gazeMapper_station1/**/*
+!gazeMapper_station1/**
+gazeMapper_station2/**/*
+!gazeMapper_station2/**
+report/**/*
+!report/**
+stimuli/**/*
+!stimuli/**

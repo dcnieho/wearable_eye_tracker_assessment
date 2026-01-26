@@ -1,0 +1,461 @@
+{
+  "individual_markers": [
+    {
+      "__marker.Marker__": {
+        "id": 140,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 141,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 142,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 143,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 144,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 145,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 220,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 221,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 222,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 223,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 224,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 225,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 215,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    },
+    {
+      "__marker.Marker__": {
+        "id": 216,
+        "aruco_dict": "DICT_4X4_250",
+        "detect_only": true
+      }
+    }
+  ],
+  "coding_setup": [
+    {
+      "event_type": "Sync ET Data",
+      "name": "Sync",
+      "description": "Eye tracker synchronization episode",
+      "hotkey": "s",
+      "sync_setup": {
+        "get_cam_movement_method": "function",
+        "get_cam_movement_function": {
+          "parameters": {
+            "low": [
+              170,
+              200,
+              170
+            ],
+            "high": [
+              27,
+              255,
+              255
+            ],
+            "edge_cut_fac": 9
+          },
+          "module_or_file": "gazeMapper.utils.color_blob_localizer",
+          "function": "detect_blob_HSV"
+        }
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 215,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 216,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 216,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 215,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "event_type": "Trial",
+      "name": "Slippage horizontal",
+      "description": "Slippage episode (horizontal glasses movement)",
+      "hotkey": "h",
+      "planes": {
+        "builtin.set": [
+          "slippage"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 220,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 221,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 221,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 220,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "gaze_offset_setup": {
+        "slippage": {
+          "which_targets": {
+            "builtin.set": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "event_type": "Trial",
+      "name": "Slippage vertical",
+      "description": "Slippage episode (vertical glasses movement)",
+      "hotkey": "v",
+      "planes": {
+        "builtin.set": [
+          "slippage"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 222,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 223,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 223,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 222,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "gaze_offset_setup": {
+        "slippage": {
+          "which_targets": {
+            "builtin.set": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "event_type": "Trial",
+      "name": "Slippage depth",
+      "description": "Slippage episode (back-and-forth glasses movement)",
+      "hotkey": "b",
+      "planes": {
+        "builtin.set": [
+          "slippage"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 224,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 225,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 225,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 224,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "gaze_offset_setup": {
+        "slippage": {
+          "which_targets": {
+            "builtin.set": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Parallax 100",
+      "event_type": "Validate",
+      "description": "Parallax fixations at 100 cm episode",
+      "hotkey": "1",
+      "planes": {
+        "builtin.set": [
+          "validate_100"
+        ]
+      },
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 140,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 141,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 141,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 140,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "validation_setup": {
+        "dynamic_split_consecutive": true
+      }
+    },
+    {
+      "name": "Parallax 30",
+      "event_type": "Validate",
+      "planes": {
+        "builtin.set": [
+          "validate_30"
+        ]
+      },
+      "description": "Parallax fixations at 30 cm episode",
+      "hotkey": "3",
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 142,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 143,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 143,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 142,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      },
+      "validation_setup": {
+        "dynamic_split_consecutive": true
+      }
+    },
+    {
+      "name": "Parallax 200",
+      "event_type": "Validate",
+      "planes": {
+        "builtin.set": [
+          "validate_200"
+        ]
+      },
+      "description": "Parallax fixations at 200 cm episode",
+      "validation_setup": {
+        "dynamic_split_consecutive": true
+      },
+      "hotkey": "2",
+      "auto_code": {
+        "start_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 144,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 145,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ],
+        "end_markers": [
+          {
+            "__config.MarkerID__": {
+              "m_id": 145,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          },
+          {
+            "__config.MarkerID__": {
+              "m_id": 144,
+              "aruco_dict": "DICT_4X4_250"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "import_do_copy_video": false,
+  "import_source_dir_as_relative_path": true,
+  "import_known_custom_eye_trackers": [
+    "demo B"
+  ],
+  "mapped_video_make_which": {
+    "builtin.set": [
+      "et"
+    ]
+  },
+  "mapped_video_recording_colors": {
+    "et": {
+      "__config.RgbColor__": {
+        "r": 255,
+        "g": 127,
+        "b": 0
+      }
+    }
+  }
+}

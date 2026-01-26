@@ -1,0 +1,15 @@
+distance = 63.0
+mode = cm
+arucoDictionary = DICT_4X4_250
+markerBorderBits = 1
+markerSide = 3.8488274999999996
+markerPosFile = markerPositions_converted.csv
+targetPosFile = targetPositions_converted.csv
+targetType = Thaler
+targetDiameter = 1.6494974999999998
+showGrid = 0
+gridCols = 74.39563141789284
+gridRows = 60.95268921771717
+minNumMarkers = 3
+centerTarget = 1
+referencePosterSize = 1920

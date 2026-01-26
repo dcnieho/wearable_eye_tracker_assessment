@@ -1,0 +1,5 @@
+{
+  "type": "GlassesValidator",
+  "use_default": false,
+  "is_dynamic": true
+}

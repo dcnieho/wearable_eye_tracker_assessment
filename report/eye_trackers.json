@@ -1,0 +1,22 @@
+{
+  "Pupil Invisible": {
+    "name": "Pupil Labs Invisible",
+    "weight": 46.9,
+    "sample_rate": 200
+  },
+  "Pupil Neon": {
+    "name": "Pupil Labs Neon",
+    "weight": 50,
+    "sample_rate": 200
+  },
+  "Tobii Glasses 3": {
+    "name": "Tobii Pro Glasses 3",
+    "weight": 76.5,
+    "sample_rate": 50
+  },
+  "VPS 19": {
+    "name": "ViewPointSystems VPS 19",
+    "weight": null,
+    "sample_rate": 60
+  }
+}
