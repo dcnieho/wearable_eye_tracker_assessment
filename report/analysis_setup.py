@@ -69,10 +69,12 @@ parallax_acc_percentiles = None
 ## display names for the columns
 et_colnames = {
     'name': 'Name',
-    'weight': 'Weight (gr)',
-    'sample_rate': 'Sampling\nfrequency (Hz)',
+    'weight': 'Weight\n(gr)',
+    'sample_rate': 'Sampling\nfrequency\n(Hz)',
     'firmware_version': 'Firmware\nversion',
-    'recording_software_version': 'Recording\nsoftware\nversion'
+    'recording_software_version': 'Recording\nsoftware\nversion',
+    'calibration': "Calibration\nmethod",
+    'n_cal_attempts': "Number of\ncalibration\nattempts"
 }
 colnames = {
     'pid': 'Participant',

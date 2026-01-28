@@ -2,21 +2,26 @@
   "Pupil Invisible": {
     "name": "Pupil Labs Invisible",
     "weight": 46.9,
-    "sample_rate": 200
+    "sample_rate": 200,
+    "calibration": "none"
   },
   "Pupil Neon": {
     "name": "Pupil Labs Neon",
     "weight": 50,
-    "sample_rate": 200
+    "sample_rate": 200,
+    "calibration": "none"
   },
   "Tobii Glasses 3": {
     "name": "Tobii Pro Glasses 3",
     "weight": 76.5,
-    "sample_rate": 50
+    "sample_rate": 50,
+    "calibration": "1 point"
   },
   "VPS 19": {
     "name": "ViewPointSystems VPS 19",
     "weight": null,
-    "sample_rate": 60
+    "sample_rate": 60,
+    "calibration": "1 point",
+    "n_cal_attempts": "1x 2 attempts\n3x 3 attempts\n1x 4 attempts"
   }
 }
