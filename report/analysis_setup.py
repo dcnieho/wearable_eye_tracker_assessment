@@ -81,7 +81,7 @@ colnames = {
     'tracker': 'Name',
     'ring': 'Ring',
     'target location': 'Target\nlocation',
-    'distance': 'Distance\n(cm)',
+    'slippage direction': 'Slippage\ndirection',
 
     'acc': 'Acc\n(deg)',
     'rms': 'RMS\n(deg)',

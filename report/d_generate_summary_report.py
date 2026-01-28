@@ -155,7 +155,7 @@ else:
     df_slippage = pd.read_csv(data_dir/naming.station2_1, delimiter='\t')
     D = df_slippage.groupby(by = ['tracker', 'trial']).mean(numeric_only=True)
     D = D[['shift_x', 'shift_y', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
-    D = D.replace(analysis_setup.slippage_trials)
+    D = D.replace(analysis_setup.slippage_trials).rename(columns={'trial': 'slippage direction'})
     # get number of participants per tracker
     n_participants = df_slippage.groupby(by=['tracker','pid']).mean(numeric_only=True).groupby(level='tracker').size().to_dict()
 

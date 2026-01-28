@@ -133,7 +133,7 @@ for et in et_info.index:
         df_slippage = pd.read_csv(data_dir/naming.station2_1, delimiter='\t')
         D = df_slippage[df_slippage.tracker==et_nm].groupby(by = ['pid', 'trial']).mean(numeric_only=True)
         D = D[['shift_x', 'shift_y', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
-        D = D.replace(analysis_setup.slippage_trials)
+        D = D.replace(analysis_setup.slippage_trials).rename(columns={'trial': 'slippage direction'})
 
         colors = {c: custom_cmap for c in ['shift_x', 'shift_y', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
         colors_limits = utils.get_color_limits(D, {'shift_x': analysis_setup.slippage_acc_lim, 'shift_y': analysis_setup.slippage_acc_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['shift_x','shift_y'], analysis_setup.slippage_acc_percentiles)
