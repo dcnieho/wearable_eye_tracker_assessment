@@ -97,14 +97,19 @@ def local_robust_range(signal, window_size=100, lower=5, upper=95):
     return ranges
 
 
-def get_et_info_from_recordings(data_dir, et_override_table):
+def get_et_info_from_recordings(data_dir, et_override_table, only_station:int|None=None):
     et_info = None
-    for f in [f'{pr}eye_tracker_info.tsv' for pr in [naming.station1_prefix, naming.station2_prefix]]:
-        this_info = pd.read_csv(data_dir / f, delimiter='\t')
+    for f in [f'{pr}eye_tracker_info.tsv' for pr in [s for i,s in zip((1,2),[naming.station1_prefix, naming.station2_prefix]) if only_station is None or i==only_station]]:
+        f_name = data_dir / f
+        if not f_name.is_file():
+            continue
+        this_info = pd.read_csv(f_name, delimiter='\t')
         if et_info is None:
             et_info = this_info
         else:
             et_info = pd.concat([et_info, this_info], ignore_index=True)
+    if et_info is None:
+        raise RuntimeError(f'No eye tracker info files found for station {only_station if only_station is not None else ""} in data directory')
     et_info['device'] = et_info['device'].apply(lambda d: eyetracker.EyeTracker(d))
     et_info = (et_info
         .groupby('device', sort=False)
@@ -175,11 +180,16 @@ class BookmarkedDocTemplate(SimpleDocTemplate):
         """Detects specific Paragraphs and adds bookmarks"""
         if isinstance(flowable, Paragraph):
             style = flowable.style.name
-            if style == 'Heading3': # NB we abuse Heading3 for section headings
+            if style == 'Heading2':
+                text = flowable.getPlainText()
+                key = f'h2_{self.page}_{text[:10]}'
+                self.canv.bookmarkPage(key)
+                self.canv.addOutlineEntry(text, key, level=0)
+            elif style == 'Heading3':
                 text = flowable.getPlainText()
                 key = f'h3_{self.page}_{text[:10]}'
                 self.canv.bookmarkPage(key)
-                self.canv.addOutlineEntry(text, key, level=0)
+                self.canv.addOutlineEntry(text, key, level=1)
 
 def make_apa_table(
     data,
