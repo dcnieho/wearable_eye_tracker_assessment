@@ -1,5 +1,4 @@
 import math
-from attrs import field
 import numpy as np
 import matplotlib
 import numbers
