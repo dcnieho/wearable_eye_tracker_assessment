@@ -34,7 +34,7 @@ for et in et_info.index:
         utils.make_apa_table(
             et_info.loc[et],
             colNames=analysis_setup.et_colnames,
-            colWidths=[120, 60, 60, 100, 100],
+            colWidths=analysis_setup.et_colwidths,
             decimals=defaultdict(lambda: 2, weight=1, sample_rate=0),
             zebra=True),
         Paragraph("Table 1. Tested eye tracker", utils.APA_TableCaption)]))
@@ -74,7 +74,7 @@ for et in et_info.index:
             utils.make_apa_table(
                 D,
                 colNames=analysis_setup.colnames,
-                colWidths=[120, 30, 50, 50, 50, 50, 50, 50],
+                colWidths=analysis_setup.colwidths,
                 decimals=defaultdict(lambda: 2, ring=0),
                 colors=colors,
                 colors_limits=colors_limits,
@@ -103,7 +103,7 @@ for et in et_info.index:
             utils.make_apa_table(
                 D,
                 colNames=analysis_setup.colnames,
-                colWidths=[120, 50, 50, 50, 50, 50, 50],
+                colWidths=analysis_setup.colwidths,
                 colors=colors,
                 colors_limits=colors_limits,
                 first_col_levels={},
@@ -143,7 +143,7 @@ for et in et_info.index:
             utils.make_apa_table(
                 D,
                 colNames=analysis_setup.colnames,
-                colWidths=[120, 80, 50, 50, 50, 50, 50, 50],
+                colWidths=analysis_setup.colwidths,
                 colors=colors,
                 colors_limits=colors_limits,
                 first_col_levels={},
@@ -198,7 +198,7 @@ for et in et_info.index:
             utils.make_apa_table(
                 D,
                 colNames=analysis_setup.colnames,
-                colWidths=[120, 50, 50, 50, 50, 50, 50],
+                colWidths=analysis_setup.colwidths,
                 colors=colors,
                 colors_limits=colors_limits,
                 first_col_levels={},

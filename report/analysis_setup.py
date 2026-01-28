@@ -66,7 +66,7 @@ slippage_acc_percentiles = None
 parallax_acc_percentiles = None
 
 
-## display names for the columns
+## display names and widths for the columns
 et_colnames = {
     'name': 'Name',
     'weight': 'Weight\n(gr)',
@@ -75,6 +75,15 @@ et_colnames = {
     'recording_software_version': 'Recording\nsoftware\nversion',
     'calibration': "Calibration\nmethod",
     'n_cal_attempts': "Number of\ncalibration\nattempts"
+}
+et_colwidths = {
+    'name': 120,
+    'weight': 50,
+    'sample_rate': 60,
+    'firmware_version': 100,
+    'recording_software_version': 80,
+    'calibration': 60,
+    'n_cal_attempts': 80
 }
 colnames = {
     'pid': 'Participant',
@@ -96,4 +105,25 @@ colnames = {
     'shift': 'Total\napparent\ngaze\nshift\n(deg)',
     'shift_x': 'Horizontal\napparent\ngaze\nshift\n(deg)',
     'shift_y': 'Vertical\napparent\ngaze\nshift\n(deg)',
+}
+colwidths = {
+    'pid': 80,
+    'tracker': 120,
+    'ring': 30,
+    'target location': 50,
+    'slippage direction': 80,
+
+    'acc': 50,
+    'rms': 50,
+    'std': 50,
+    'Fs': 50,
+    'relative_Fs': 50,
+    'data_loss': 50,
+
+    'offset_total': 50,
+    'pd_diff': 50,
+
+    'shift': 50,
+    'shift_x': 50,
+    'shift_y': 50,
 }

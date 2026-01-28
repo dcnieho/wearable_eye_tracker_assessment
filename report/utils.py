@@ -282,6 +282,8 @@ def make_apa_table(
     table_data = [header_lbls] + display_rows
 
     # Create table
+    if isinstance(colWidths, dict):
+        colWidths = [colWidths.get(h, None) for h in header]
     tbl = Table(table_data, colWidths=colWidths, repeatRows=1)
 
     style_cmds = [
