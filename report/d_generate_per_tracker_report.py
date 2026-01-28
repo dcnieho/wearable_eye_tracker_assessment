@@ -55,7 +55,7 @@ for et in et_info.index:
     else:
         # 1.1 Fixation task
         elements.append(KeepTogether([
-            Paragraph("Station 1, fixation task", utils.styles["Heading3"]),
+            Paragraph("Station 1, Fixation task", utils.styles["Heading3"]),
             utils.auto_image(plot_dir / f'{naming.station1_1_prefix}{et_nm}.png'),
             Paragraph(
                 "Data quality metrics (accuracy, RMS-S2S and STD precision, and data loss) per target for the fixation task.",
@@ -139,6 +139,7 @@ for et in et_info.index:
         colors_limits = utils.get_color_limits(D, {'shift_x': analysis_setup.slippage_acc_lim, 'shift_y': analysis_setup.slippage_acc_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['shift_x','shift_y'], analysis_setup.slippage_acc_percentiles)
 
         elements.append(KeepTogether([
+            Paragraph("Station 2, Slippage", utils.styles["Heading3"]),
             Paragraph("Table 4: Apparent gaze shift due to glasses slippage in different directions, per participant.", utils.APA_TableCaption),
             utils.make_apa_table(
                 D,
