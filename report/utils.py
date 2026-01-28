@@ -122,7 +122,8 @@ def get_et_info_from_recordings(data_dir, et_override_table):
             et_info[et][key] = et_data[key]
     et_info = pd.DataFrame.from_dict(et_info, orient='index')
     # order columns
-    return et_info[['name', 'weight', 'sample_rate', 'firmware_version', 'recording_software_version']]
+    cols = ['name', 'weight', 'sample_rate', 'firmware_version', 'recording_software_version']
+    return et_info[cols+[c for c in et_info.columns if c not in cols]]
 
 def unique_value_or_natsorted_list(series: pd.Series):
     # Drop NA-like entries, keep original types if you want; versions are typically strings anyway
