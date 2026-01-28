@@ -116,12 +116,14 @@ for et in et_info.index:
             (gray vertical stripes). Participants were asked to look at a target on the right, left, and middle \
             of the screen. Negative values correspond to leftward (x) or upward (y) offsets, whereas positive \
             values to downward (x) or rightward (y) offsets.", utils.styles["BodyText"])
-        explanation.keepWithNext = 1
-        elements.append(explanation)
-        elements.append(Spacer(1, 3))
 
         for pid in df_PSA.pid.unique():
-            elements.append(utils.auto_image(plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png'))
+            img = utils.auto_image(plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png')
+            if explanation is not None:
+                elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
+                explanation = None
+            else:
+                elements.append(img)
         elements.append(PageBreak())
 
 
@@ -155,12 +157,14 @@ for et in et_info.index:
             "The following plots show, for each participant, the horizontal (x) and vertical (y) gaze \
             offset over time while the eye-tracker glasses are moved back-and-fourth, side-to-side, \
             or up-and-down.", utils.styles["BodyText"])
-        explanation.keepWithNext = 1
-        elements.append(explanation)
-        elements.append(Spacer(1, 3))
 
         for pid in df_slippage.pid.unique():
-            elements.append(utils.auto_image(plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png'))
+            img = utils.auto_image(plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png')
+            if explanation is not None:
+                elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
+                explanation = None
+            else:
+                elements.append(img)
         elements.append(PageBreak())
 
         # 2.2 parallax
@@ -209,12 +213,14 @@ for et in et_info.index:
             f"The following plots show, for each participant, the horizontal (x) and vertical (y) gaze \
             offset for each fixation target at each viewing distance, along with the parallax error \
             (apparent gaze shifts between viewing distances {diff_dists[0]} cm and {diff_dists[1]} cm).", utils.styles["BodyText"])
-        explanation.keepWithNext = 1
-        elements.append(explanation)
-        elements.append(Spacer(1, 3))
 
         for pid in df_slippage.pid.unique():
-            elements.append(utils.auto_image(plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png'))
+            img = utils.auto_image(plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png')
+            if explanation is not None:
+                elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
+                explanation = None
+            else:
+                elements.append(img)
 
     # build PDF
     doc.build(elements)
