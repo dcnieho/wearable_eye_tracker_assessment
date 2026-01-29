@@ -37,6 +37,7 @@ sessions = session.get_sessions_from_project_directory(gazeMapper_project_path, 
 
 # process each session
 df_res = None
+et_infos = {}
 for s in sessions:
     rec_dir = s.working_directory / et_rec.name
     if et_rec.name not in s.recordings:
@@ -45,6 +46,7 @@ for s in sessions:
     et  = s.recordings[et_rec.name].info.eye_tracker
     pid = s.name.split('_')[0]
     et_nm = et.value
+    et_infos[(pid, et_nm)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     if not (gaze_data_file:=rec_dir/gt_naming.gaze_data_fname).is_file():
         print(f'The gaze data file "{gaze_data_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
@@ -165,6 +167,11 @@ if df_res is None or df_res.empty:
     print('No data collected, not performing further station 2 parallax analysis.')
     exit(0)
 df_res.to_csv(data_dir / naming.station2_2, index=False, sep='\t', na_rep='nan', float_format='%.8f')
+
+# also store eye tracker info
+et_info = pd.DataFrame.from_dict(et_infos, orient='index')
+et_info.index = pd.MultiIndex.from_tuples(et_info.index, names=['participant', 'device'])
+et_info.to_csv(data_dir / f'{naming.station2_prefix}eye_tracker_info.tsv', index=True, sep='\t')
 
 # make plots showing parallax
 # average over multiple looks at the target

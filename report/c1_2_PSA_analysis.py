@@ -31,6 +31,7 @@ sessions = session.get_sessions_from_project_directory(gazeMapper_project_path, 
 
 # process each session
 data = []
+et_infos = {}
 for s in sessions:
     rec_dir = s.working_directory / et_rec.name
     if et_rec.name not in s.recordings:
@@ -39,6 +40,7 @@ for s in sessions:
     et  = s.recordings[et_rec.name].info.eye_tracker
     pid = s.name.split('_')[0]
     et_nm = et.value
+    et_infos[(pid, et.value)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     offsets_file = rec_dir/naming.PSA_offsets
     if not offsets_file.is_file():
@@ -161,6 +163,11 @@ if not data:
     exit(0)
 df_res = pd.DataFrame.from_records(data)
 df_res.to_csv(data_dir / naming.station1_2, index=False, sep='\t', na_rep='nan', float_format='%.8f')
+
+# also store eye tracker info
+et_info = pd.DataFrame.from_dict(et_infos, orient='index')
+et_info.index = pd.MultiIndex.from_tuples(et_info.index, names=['participant', 'device'])
+et_info.to_csv(data_dir / f'{naming.station1_prefix}eye_tracker_info.tsv', index=True, sep='\t')
 
 
 # Plot PSA vectors for all participant in one plot, per eye tracker and target

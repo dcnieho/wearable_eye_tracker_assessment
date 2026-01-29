@@ -123,6 +123,7 @@ if not data:
     exit(0)
 df_res = pd.DataFrame.from_records(data)
 df_res.to_csv(data_dir / naming.station1_1, index=False, sep='\t', na_rep='nan', float_format='%.8f')
+
 # also store eye tracker info
 et_info = pd.DataFrame.from_dict(et_infos, orient='index')
 et_info.index = pd.MultiIndex.from_tuples(et_info.index, names=['participant', 'device'])
