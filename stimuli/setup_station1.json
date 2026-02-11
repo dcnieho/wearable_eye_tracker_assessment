@@ -1,0 +1,172 @@
+{
+    "screen": {
+        "which_monitor": 1,
+        "width": 109.8,
+        "viewing_distance": 63.0,
+        "refresh_rate": 60,
+        "refresh_rate_tolerance": 10,
+        "resolution": [3840, 2160],
+        "origin": [0.0, 6.0],
+        "units": "degFlatPos",
+        "background_color": "grey"
+    },
+
+    "instruction_text": {
+        "height": 1.5,
+        "color": "black"
+    },
+
+    "aruco": {
+        "dict": "DICT_4X4_250",
+        "border_bits": 1
+    },
+
+    "segment_marker": {
+        "size": 6.0,
+        "units": "deg",
+        "margin": 0.1,
+        "duration": 1.0,
+        "background_color": "white"
+    },
+
+    "setup_check": {
+        "background_color": "grey",
+        "units": "degFlatPos",
+        "background_patch": {
+            "radius": 3,
+            "color": "darkgrey"
+        },
+        "target": {
+            "outer_diameter": 0.7,
+            "inner_diameter": 0.1,
+            "outer_color": "black",
+            "inner_color": "white"
+        },
+        "positions":[
+            [0  ,  0],
+            [-15,  0],
+            [ 15,  0],
+            [0,  -10],
+            [0,   10]
+        ]
+    },
+
+    "et_sync": {
+        "segment_marker": {
+            "start_IDs": [200, 201],
+            "end_IDs": [201, 200]
+        },
+
+        "pre_post_duration": 1.5,
+        "duration": 10.0,
+        "background_color": "grey",
+        "units": "degFlatPos",
+        "background_patch": {
+            "radius": 1.5,
+            "pre_post_color": "darkgrey",
+            "color": "red"
+        },
+        "target": {
+            "outer_diameter": 0.7,
+            "inner_diameter": 0.1,
+            "outer_color": "black",
+            "inner_color": "white"
+        },
+        "metronome": {
+            "duration": 0.05,
+            "frequency": 880,
+            "volume": 0.8,
+            "interval": 1.0
+        }
+    },
+
+    "validation": {
+        "n_repetitions": 2,
+
+        "segment_marker": {
+            "start_IDs": [205, 206],
+            "end_IDs": [206, 205]
+        },
+
+        "markers": {
+            "file": "markerPositions_fixationGrid.csv",
+            "size": 3.5,
+            "units": "deg",
+            "margin": 0.1,
+            "background_color": "white",
+            "replace_IDs": [0, 4],
+            "replace_ID_start": 100,
+            "replace_ID_offset": 30,
+            "replace_method": "validator"
+        },
+
+        "targets": {
+            "file": "targetPositions_fixationGrid.csv",
+            "units": "degFlatPos",
+            "first_ID": 1,
+            "center_target": 1,
+            "duration": 1.0,
+            "placeholder": {
+                "color": "white",
+                "diameter": 1.0
+            },
+            "cue": {
+                "color": "red",
+                "diameter": 0.7
+            },
+            "move": {
+                "duration": 2.5,
+                "diameter": 1.5,
+                "min_duration": 1.0,
+                "move_with_acceleration": true
+            },
+            "shrink": {
+                "duration": 0.4
+            },
+            "look": {
+                "diameter_min": 0.7,
+                "diameter_max": 1.5,
+                "outer_color": "black",
+                "inner_color": "white"
+            }
+        }
+    },
+
+    "PSA": {
+        "segment_marker": {
+            "start_IDs": [210, 211],
+            "end_IDs": [211, 210]
+        },
+
+        "n_cycle": 6,
+        "durations": {
+            "precycle": 3.0,
+            "bright": 2.0,
+            "dark": 8.0
+        },
+        "background_colors": {
+            "precycle": [0.4, 0.4, 0.4],
+            "bright": "white",
+            "dark": "black"
+        },
+        "background_patch": {
+            "radius": 1.5,
+            "color": [-0.325490196078431, -0.325490196078431, -0.325490196078431]
+        },
+        "target": {
+            "outer_diameter": 0.7,
+            "inner_diameter": 0.1,
+            "outer_color": "black",
+            "inner_color": "white",
+            "positions": [[-15, 0], [0, 0], [15, 0]],
+            "units": "degFlatPos"
+        },
+        "fiducials": {
+            "phi": [30.0, 70.0, 110.0, 150.0, 210.0, 270.0, 330.0, 30.0, 70.0, 110.0, 150.0, 210.0, 270.0, 330.0, 110.0, 210.0, 270.0],
+            "rho": [4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 12, 12, 12],
+            "units": "deg",
+            "radius": 0.5,
+            "color": "red"
+        }
+    }
+}
