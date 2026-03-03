@@ -21,6 +21,7 @@ custom_cmap_fs  = utils.custom_colormap(analysis_setup.colors_fs)
 ets = {e: et_info_s1.loc[e,'name'] for e in et_info_s1.index} | {e: et_info_s2.loc[e,'name'] for e in et_info_s2.index}
 for et in ets:
     et_nm = et.value
+    print(f'Generating report for {et_nm}...')
 
     doc = utils.BookmarkedDocTemplate(f"report_{et_nm}.pdf", pagesize=A4)
     elements = []
@@ -80,6 +81,20 @@ for et in ets:
                     colors_limits=colors_limits,
                     first_col_levels={},
                     body_cell_padding=(6,1.5))]))
+            elements.append(Spacer(1, 12))
+
+            explanation = Paragraph(
+                "The following plots show, for each participant, the data quality metrics (accuracy, \
+                RMS-S2S and STD precision, and data loss) for each target in the fixation task. For \
+                accuracy, the position of the individual fixations is also shown.", utils.styles["BodyText"])
+
+            for pid in df_fixation.pid.unique():
+                img = utils.auto_image(plot_dir / f'{naming.station1_1_prefix}{et_nm}_{pid}.png')
+                if explanation is not None:
+                    elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
+                    explanation = None
+                else:
+                    elements.append(img)
             elements.append(PageBreak())
 
         if not (data_dir/naming.station1_2).is_file():
