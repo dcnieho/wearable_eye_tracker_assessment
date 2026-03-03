@@ -97,6 +97,49 @@ def local_robust_range(signal, window_size=100, lower=5, upper=95):
     return ranges
 
 
+def format_legend_numbers(ax, max_decimals=3):
+    """
+    Reduce decimal precision of numeric legend entries until
+    at least one entry needs the decimals or no decimals remain.
+    """
+    legend = ax.get_legend()
+    if legend is None:
+        return
+
+    texts = legend.get_texts()
+
+    # Extract numeric values
+    numeric = []
+    for text in texts:
+        try:
+            numeric.append(float(text.get_text()))
+        except ValueError:
+            numeric.append(None)
+
+    # Try decreasing precision
+    for decimals in range(max_decimals, -1, -1):
+        formatted = []
+        all_trailing_zero = True
+
+        for val in numeric:
+            if val is None:
+                formatted.append(None)
+                continue
+
+            s = f"{val:.{decimals}f}"
+            formatted.append(s)
+
+            if decimals > 0 and not s.endswith("0"):
+                all_trailing_zero = False
+
+        # Stop if decimals are actually needed
+        if not all_trailing_zero or decimals == 0:
+            for text, s in zip(texts, formatted):
+                if s is not None:
+                    text.set_text(s)
+            break
+
+
 def get_et_info_from_recordings(data_dir, et_override_table, only_station:int|None=None):
     et_info = None
     for f in [f'{pr}eye_tracker_info.tsv' for pr in [s for i,s in zip((1,2),[naming.station1_prefix, naming.station2_prefix]) if only_station is None or i==only_station]]:

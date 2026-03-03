@@ -163,3 +163,42 @@ for et in df_res.tracker.unique():
     plt.tight_layout()
     fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
+
+# make plots showing values for each point, per participant, per eye tracker
+for et in df_res.tracker.unique():
+    for pid in df_res.pid.unique():
+        df_et_pid = df_res.loc[(df_res["tracker"] == et) & (df_res["pid"] == pid),
+                               ["target_x_deg", "target_y_deg", "acc_x", "acc_y", *metric_fields]]
+        # aggregate over target presentations by taking mean, to get more stable estimates per target location
+        df_et_pid_aggr = df_et_pid.groupby(["target_x_deg", "target_y_deg"], as_index=False)[metric_fields].mean()
+        fig, axs = plt.subplots(2, 2, figsize=(7.5, 5))
+        fig.suptitle(pid)
+        for ax, metric in zip(axs.flat, metric_fields):
+            sns.scatterplot(
+                data=df_et_pid_aggr, x="target_x_deg", y="target_y_deg",
+                hue=metric, size=metric, palette="viridis",
+                ax=ax
+            )
+            if metric=='acc':
+                # also plot individual measurement points (not averaged over target presentations) to get a sense of variability
+                # first target matching
+                for t, row in df_et_pid.iterrows():
+                    ax.plot([row['target_x_deg'], row['target_x_deg'] + row['acc_x']], [row['target_y_deg'], row['target_y_deg'] + row['acc_y']],'r-', lw=1.5)
+                # now also fixation locations themselves
+                ax.plot(df_et_pid.target_x_deg+df_et_pid.acc_x, df_et_pid.target_y_deg+df_et_pid.acc_y, 'ro', markersize=3)
+            ax.set_title(metrics[metric])
+            ax.invert_yaxis()
+            ax.set_aspect('equal', adjustable='box')
+            ax.label_outer()
+            # make legend and fix numeric precision of legend entries
+            ax.legend(bbox_to_anchor=(1, 1.02), loc="upper left")
+            utils.format_legend_numbers(ax, max_decimals=1 if metric=='data_loss' else 2)
+
+
+        axs[1, 0].set_xlabel("Horizontal position (deg)")
+        axs[1, 1].set_xlabel("Horizontal position (deg)")
+        axs[0, 0].set_ylabel("Vertical position (deg)")
+        axs[1, 0].set_ylabel("Vertical position (deg)")
+        plt.tight_layout()
+        fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et}_{pid}.png', dpi=300, bbox_inches='tight')
+        plt.close(fig)
