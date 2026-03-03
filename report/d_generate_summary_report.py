@@ -87,7 +87,7 @@ elements.append(KeepTogether([utils.auto_image("station2_methods.PNG"),
 
 elements.append(KeepTogether([
     Paragraph("Reference", utils.styles["Heading3"]),
-    Paragraph("Niehorster, D. C., Marano, G., Pettenella, A., Carminati, M., Melloni, F., Merigo, L. & Nyström, M. (in prep). Methodology for systematically assessing wearable eye tracker performance.",
+    Paragraph("Niehorster, D. C., Marano, G., Pettenella, A., Carminati, M., Melloni, F., Merigo, L. & Nyström, M. (in prep). A methodology for systematically assessing wearable eye tracker performance.",
         utils.styles["BodyText"])]))
 
 

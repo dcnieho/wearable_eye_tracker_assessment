@@ -31,7 +31,7 @@ for et in ets:
     elements.extend([
         Paragraph(f"This report contains detailed output of the evaluation of the {ets[et]} eye tracker.", utils.styles["BodyText"]),
         Paragraph("Reference", utils.styles["Heading4"]),
-        Paragraph("Niehorster, D. C., Marano, G., Pettenella, A., Carminati, M., Melloni, F., Merigo, L. & Nyström, M. (in prep). Methodology for systematically assessing wearable eye tracker performance.",
+        Paragraph("Niehorster, D. C., Marano, G., Pettenella, A., Carminati, M., Melloni, F., Merigo, L. & Nyström, M. (in prep). A methodology for systematically assessing wearable eye tracker performance.",
             utils.styles["BodyText"])])
 
     # Results station 1
