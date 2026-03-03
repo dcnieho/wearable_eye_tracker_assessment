@@ -1,5 +1,6 @@
 # Analysis workflow
 This document describes the workflow for analyzing eye tracking data collected for station 1 and station 2, culminating in a summary benchmark report card, and a detailed report card per tested eye tracker.
+This is part of the code released for the paper Niehorster, D. C., Marano, G., Pettenella, A., Carminati, M., Melloni, F., Merigo, L. & Nyström, M. (in prep). A methodology for systematically assessing wearable eye tracker performance.
 
 ## General set up
 1. Make a new python venv
@@ -12,7 +13,7 @@ This document describes the workflow for analyzing eye tracking data collected f
 With the above set up done, most of the analysis is a set of actions that can be performed in gazeMapper, after which a few custom scripts are run. The various steps are detailed below, per station.
 
 ## Station 1 analysis workflow
-1. Open the gazeMapper project for station 1.
+1. Open the gazeMapper project for station 1. Note that if you made changed to the stimulus scripts and their settings, you must ensure that the settings of this gazeMapper project are changed to correspond.
 2. Import the eye tracking recordings you want to analyze by doing the following:
     a. Make sessions into which the recordings can be imported. Ensure the sessions have descriptive names. We recommend using the template `<participant ID>_<eye tracker name>`. Some of the analysis scripts depend on the session name starting with `<participant ID>_`. The exact eye tracker name does not matter, the scripts read it from the recording info in the gazeMapper recording folder. An example session name could be `P01_neon`.
     b. Drag-and-drop folders containing eye tracker recordings onto the GUI, or click the `import eye tracker recordings` button in the GUI.
@@ -32,7 +33,7 @@ With the above set up done, most of the analysis is a set of actions that can be
     c. Run the `b_PSA_gaze_offset.py` script to determine gaze offsets from the target for each frame.
 
 ## Station 2 analysis workflow
-1. Open the gazeMapper project for station 2.
+1. Open the gazeMapper project for station 2. Note that if you made changed to the stimulus scripts and their settings, you must ensure that the settings of this gazeMapper project are changed to correspond.
 2. Import the eye tracking recordings you want to analyze by doing the following:
     a. Make sessions into which the recordings can be imported. Ensure the sessions have descriptive names. We recommend using the template `<participant ID>_<eye tracker name>`. Some of the analysis scripts depend on the session name starting with `<participant ID>_`. The exact eye tracker name does not matter, the scripts read it from the recording info in the gazeMapper recording folder. An example session name could be `P01_neon`.
     b. Drag-and-drop folders containing eye tracker recordings onto the GUI, or click the `import eye tracker recordings` button in the GUI.
