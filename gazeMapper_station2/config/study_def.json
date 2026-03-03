@@ -158,8 +158,8 @@
     },
     {
       "event_type": "Trial",
-      "name": "Slippage horizontal",
-      "description": "Slippage episode (horizontal glasses movement)",
+      "name": "Slippage vertical",
+      "description": "Slippage episode (up-and-down glasses movement)",
       "hotkey": "h",
       "planes": {
         "builtin.set": [
@@ -208,8 +208,8 @@
     },
     {
       "event_type": "Trial",
-      "name": "Slippage vertical",
-      "description": "Slippage episode (vertical glasses movement)",
+      "name": "Slippage nose",
+      "description": "Slippage episode (slide along nose bridge)",
       "hotkey": "v",
       "planes": {
         "builtin.set": [
@@ -258,8 +258,8 @@
     },
     {
       "event_type": "Trial",
-      "name": "Slippage depth",
-      "description": "Slippage episode (back-and-forth glasses movement)",
+      "name": "Slippage roll",
+      "description": "Slippage episode (rotation around nose bridge)",
       "hotkey": "b",
       "planes": {
         "builtin.set": [
