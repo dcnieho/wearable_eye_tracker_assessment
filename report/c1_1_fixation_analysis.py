@@ -159,6 +159,7 @@ for et in df_res.tracker.unique():
         ax.set_aspect('equal', adjustable='box')
         ax.label_outer()
         ax.legend(bbox_to_anchor=(1, 1.02), loc="upper left")
+        utils.format_legend_numbers(ax, max_decimals=1 if metric=='data_loss' else 2)
 
     axs[1, 0].set_xlabel("Horizontal position (deg)")
     axs[1, 1].set_xlabel("Horizontal position (deg)")
