@@ -4,7 +4,7 @@ This repository contains the code and other required information for the wearabl
 ## Contents
 - `gazeMapper_station1`: Preconfigured gazeMapper project used in the analysis of Station 1
 - `gazeMapper_station2`: Preconfigured gazeMapper project used in the analysis of Station 2
-- `report`: Code for further analysis of Stations 1 and 2 and for generating the report cards.
+- `report`: Code for further analysis of Stations 1 and 2 and for generating the report cards
 - `stimuli`: Code for presenting the visual tasks of Stations 1 and 2
 - `Protocol_station1.docx`: Protocol for data collection for Station 1
 - `Protocol_station2.docx`: Protocol for data collection for Station 2
