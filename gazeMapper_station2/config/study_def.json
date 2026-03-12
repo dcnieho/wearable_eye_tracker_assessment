@@ -441,9 +441,6 @@
   ],
   "import_do_copy_video": false,
   "import_source_dir_as_relative_path": true,
-  "import_known_custom_eye_trackers": [
-    "demo B"
-  ],
   "mapped_video_make_which": {
     "builtin.set": [
       "et"
