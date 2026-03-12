@@ -5,8 +5,8 @@ import numpy as np
 import seaborn as sns
 
 import analysis_setup, utils, naming
-from gazeMapper import config, naming as gm_naming, plane, session
-from glassesTools import naming as gt_naming
+from gazeMapper import config, naming as gm_naming, plane, process, session
+from glassesTools import annotation, naming as gt_naming
 from glassesTools.validation.config import get_targets, get_validation_setup
 
 
@@ -36,6 +36,10 @@ if len(val_planes)!=1:
 val_plane = val_planes[0]
 validation_setup = get_validation_setup(config_dir/val_plane.name)
 viewing_distance = validation_setup['distance']
+val_events = process.get_specific_event_types(study_config, specific_event_type=annotation.EventType.Validate)
+if len(val_events)!=1:
+    raise RuntimeError('A project with one validation episode configured is expected')
+val_event = val_events[0]
 # get targets on the plane, make relative to center target
 df_target = get_targets(config_dir/val_plane.name, 'targetPositions_converted.csv')
 df_target.x -= df_target.loc[validation_setup['centerTarget']].x
@@ -64,11 +68,11 @@ for s in sessions:
     et_infos[(pid, et.value)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     # check required files are present, and load
-    if not (dq_file:=rec_dir/f'{gm_naming.validation_prefix}{val_plane.name}_data_quality.tsv').is_file():
+    if not (dq_file:=rec_dir/f'{gm_naming.validation_prefix}{val_event["name"]}_data_quality.tsv').is_file():
         print(f'The data quality file "{dq_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
         continue
     dq = pd.read_csv(dq_file, sep='\t')
-    if not (fixation_coding_file:=rec_dir/f'{gm_naming.validation_prefix}{val_plane.name}_fixation_assignment.tsv').is_file():
+    if not (fixation_coding_file:=rec_dir/f'{gm_naming.validation_prefix}{val_event["name"]}_fixation_assignment.tsv').is_file():
         print(f'The fixation assignment file "{fixation_coding_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
         continue
     fixation_coding = pd.read_csv(fixation_coding_file, sep='\t')
