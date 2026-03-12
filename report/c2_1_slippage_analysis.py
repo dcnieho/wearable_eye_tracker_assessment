@@ -102,7 +102,7 @@ for s in sessions:
             )
 
         ax[i].yaxis.set_label_position("right")  # Move label to right
-        ax[i].set_ylabel(analysis_setup.slippage_trials[trial], rotation=270, labelpad=15)
+        ax[i].set_ylabel(analysis_setup.slippage_trials[trial], rotation=270, labelpad=25)
 
         # compute shift range
         rx = np.nanmean(utils.local_robust_range(trial_gaze.offset_x_target_1_pose_vidpos_ray, window_size=analysis_setup.eye_trackers[et]['sample_rate']*2))
