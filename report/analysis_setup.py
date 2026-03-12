@@ -19,8 +19,8 @@ fixation_rings_upper = [[0], [10], [15, 18], [20, 25]]
 fixation_rings_lower = [[0], [10], [20]    , [30]]
 ## 2. PSA setup
 ### 1. get fiducials
-PSA_phi = [30.0, 70.0, 110.0, 150.0, 210.0, 270.0, 330.0, 30.0, 110.0, 150.0, 210.0, 270.0, 330.0, 30.0, 110.0, 210.0, 270.0]
-PSA_rho = [4,    4,    4,     4,     4,     4,     4,     8,    8,     8,     8,     8,     8,     12,   12,    12,    12]
+PSA_phi = [30.0, 70.0, 110.0, 150.0, 210.0, 270.0, 330.0, 30.0, 70.0, 110.0, 150.0, 210.0, 270.0, 330.0, 110.0, 210.0, 270.0]
+PSA_rho = [4,    4,    4,     4,     4,     4,     4,     8,    8,    8,     8,     8,     8,     8,     12,    12,    12]
 ### 2. targets
 PSA_target_locations= {1:(-15.,0.), 2:(0.,0.) , 3:(15.,0.)}     # deg
 PSA_target_names    = {1:'left'   , 2:'middle', 3:'right'}
@@ -31,7 +31,7 @@ PSA_individual_axis_limits = (-10, 10)
 # station 2
 ## 1. Slippage setup
 slippage_offset_suffix = 'slippage'
-slippage_trials = {'Slippage horizontal': 'side-to-side', 'Slippage vertical': 'up-and-down', 'Slippage depth': 'back-and-forth'}
+slippage_trials = {'Slippage vertical': 'up-and-down', 'Slippage nose': 'slide along\nnose bridge', 'Slippage roll': 'rotate around\nnose bridge'}
 slippage_skip_dur = 2.0  # seconds to skip at start of each trial
 ## 2. Parallax setup
 parallax_distances = [30, 100, 200]  # cm
