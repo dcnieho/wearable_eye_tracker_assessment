@@ -51,13 +51,14 @@ for et in ets:
                 zebra=True),
             Paragraph("Table 1. Tested eye tracker (Station 1)", utils.APA_TableCaption)]))
 
-        if not (data_dir/naming.station1_1).is_file():
+        fig1_1_fname = plot_dir / f'{naming.station1_1_prefix}{et_nm}.png'
+        if not fig1_1_fname.is_file():
             print("No data found for Station 1, task 1 (fixation grid), skipping...")
         else:
             # 1.1 Fixation task
             elements.append(KeepTogether([
                 Paragraph("Fixation task", utils.styles["Heading3"]),
-                utils.auto_image(plot_dir / f'{naming.station1_1_prefix}{et_nm}.png'),
+                utils.auto_image(fig1_1_fname),
                 Paragraph(
                     "Data quality metrics (accuracy, RMS-S2S and STD precision, and data loss) per target for the fixation task.",
                     utils.APA_FigureCaption
@@ -97,13 +98,14 @@ for et in ets:
                     elements.append(img)
             elements.append(PageBreak())
 
-        if not (data_dir/naming.station1_2).is_file():
+        fig1_2_fname = plot_dir / f'{naming.station1_2_prefix}{et_nm}.png'
+        if not fig1_2_fname.is_file():
             print("No data found for Station 1, task 2 (PSA), skipping...")
         else:
             # 1.2 PSA
             elements.append(KeepTogether([
                 Paragraph("PSA", utils.styles["Heading3"]),
-                utils.auto_image(plot_dir / f'{naming.station1_2_prefix}{et_nm}.png', scale=.6),
+                utils.auto_image(fig1_2_fname, scale=.6),
                 Paragraph(
                     "PSA per target, for each participant.",
                     utils.APA_FigureCaption
@@ -203,13 +205,14 @@ for et in ets:
                     elements.append(img)
             elements.append(PageBreak())
 
-            # 2.2 parallax
-        if not (data_dir/naming.station2_2).is_file():
+        # 2.2 parallax
+        fig2_2_fname = plot_dir / f'{naming.station2_2_prefix}{et_nm}.png'
+        if not fig2_2_fname.is_file():
             print("No data found for Station 2, task 2 (Parallax), skipping...")
         else:
             elements.append(KeepTogether([
                 Paragraph("Parallax", utils.styles["Heading3"]),
-                utils.auto_image(plot_dir / f'{naming.station2_2_prefix}{et_nm}.png', scale=.6),
+                utils.auto_image(fig2_2_fname, scale=.6),
                 Paragraph(
                     "Parallax per target, for each participant (orange lines) along with average (red arrow).",
                     utils.APA_FigureCaption
