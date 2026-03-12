@@ -338,7 +338,7 @@ def run_fixation_sequence(win: visual.Window, config: dict, refresh_rate: int, t
     ts = [t for t in task_vars['target_positions'].index.to_list() if t!=config["targets"]["first_ID"]]
     random.shuffle(ts)
     targets = [config["targets"]["first_ID"]] + ts
-    if "n_repetitions" in config and config["n_repetitions"]>1:
+    if not config["show_segment_between_repetitions"] and config["n_repetitions"]>1:
         all_ts = [t for t in task_vars['target_positions'].index.to_list()]
         for _ in range(config["n_repetitions"]-1):
             while True:

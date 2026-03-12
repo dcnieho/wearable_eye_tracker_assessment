@@ -82,6 +82,7 @@
 
     "parallax": {
         "n_repetitions": 5,
+        "show_segment_between_repetitions": false,
         "distances": [30, 200, 100],
 
         "segment_marker": {

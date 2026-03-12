@@ -82,6 +82,7 @@
 
     "validation": {
         "n_repetitions": 2,
+        "show_segment_between_repetitions": true,
 
         "segment_marker": {
             "start_IDs": [205, 206],
