@@ -174,6 +174,8 @@ for et in df_res.tracker.unique():
     for pid in df_res.pid.unique():
         df_et_pid = df_res.loc[(df_res["tracker"] == et) & (df_res["pid"] == pid),
                                ["target_x_deg", "target_y_deg", "acc_x", "acc_y", *metric_fields]]
+        if df_et_pid.empty:
+            continue
         # aggregate over target presentations by taking mean, to get more stable estimates per target location
         df_et_pid_aggr = df_et_pid.groupby(["target_x_deg", "target_y_deg"], as_index=False)[metric_fields].mean()
         fig, axs = plt.subplots(2, 2, figsize=(7.5, 5))
