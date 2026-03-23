@@ -90,7 +90,10 @@ for et in ets:
                 accuracy, the position of the individual fixations is also shown.", utils.styles["BodyText"])
 
             for pid in df_fixation.pid.unique():
-                img = utils.auto_image(plot_dir / f'{naming.station1_1_prefix}{et_nm}_{pid}.png')
+                f_name = plot_dir / f'{naming.station1_1_prefix}{et_nm}_{pid}.png'
+                if not f_name.is_file():
+                    continue
+                img = utils.auto_image(f_name)
                 if explanation is not None:
                     elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
                     explanation = None
@@ -138,7 +141,10 @@ for et in ets:
                 values to downward (x) or rightward (y) offsets.", utils.styles["BodyText"])
 
             for pid in df_PSA.pid.unique():
-                img = utils.auto_image(plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png')
+                f_name = plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png'
+                if not f_name.is_file():
+                    continue
+                img = utils.auto_image(f_name)
                 if explanation is not None:
                     elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
                     explanation = None
@@ -197,7 +203,10 @@ for et in ets:
                 or up-and-down.", utils.styles["BodyText"])
 
             for pid in df_slippage.pid.unique():
-                img = utils.auto_image(plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png')
+                f_name = plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png'
+                if not f_name.is_file():
+                    continue
+                img = utils.auto_image(f_name)
                 if explanation is not None:
                     elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
                     explanation = None
@@ -257,7 +266,10 @@ for et in ets:
                 (apparent gaze shifts between viewing distances {diff_dists[0]} cm and {diff_dists[1]} cm).", utils.styles["BodyText"])
 
             for pid in df_slippage.pid.unique():
-                img = utils.auto_image(plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png')
+                f_name = plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png'
+                if not f_name.is_file():
+                    continue
+                img = utils.auto_image(f_name)
                 if explanation is not None:
                     elements.append(KeepTogether([explanation, Spacer(1, 3), img]))
                     explanation = None
