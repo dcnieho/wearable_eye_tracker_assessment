@@ -17,6 +17,12 @@
     "sample_rate": 50,
     "calibration": "1 point"
   },
+  "SeeTrue STONE": {
+    "name": "SeeTrue STONE",
+    "weight": null,
+    "sample_rate": 100,
+    "calibration": "27 points"
+  },
   "VPS 19": {
     "name": "ViewPointSystems VPS 19",
     "weight": null,
