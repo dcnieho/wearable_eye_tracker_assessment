@@ -154,9 +154,6 @@ for et in ets:
 
     # Results station 2
     if et in et_info_s2.index:
-        if et in et_info_s1.index:
-            elements.append(PageBreak())
-
         elements.append(Paragraph("Station 2", utils.styles["Heading2"]),)
 
         elements.append(Paragraph("Information about the recordings collected for Station 2:", utils.styles["BodyText"]))
