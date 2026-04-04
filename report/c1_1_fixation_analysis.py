@@ -63,9 +63,10 @@ for s in sessions:
     if et_rec.name not in s.recordings:
         print(f'No eye tracker recording in "{rec_dir}", skipping...')
         continue
-    et  = s.recordings[et_rec.name].info.eye_tracker
+    et  = (s.recordings[et_rec.name].info.eye_tracker, s.recordings[et_rec.name].info.eye_tracker_name or None)
+    et_lbl = et[0].value if et[1] is None else f'{et[0].value}.{et[1]}'
     pid = s.name.split('_')[0]
-    et_infos[(pid, et.value)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
+    et_infos[(pid, et_lbl)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     # check required files are present, and load
     if not (dq_file:=rec_dir/f'{gm_naming.validation_prefix}{val_event["name"]}_data_quality.tsv').is_file():
@@ -111,7 +112,7 @@ for s in sessions:
         data_loss = np.mean([np.sum(np.isnan(target_gaze.gaze_pos_vid_x)) / n_samples,
                              np.sum(np.isnan(target_gaze.gaze_pos_vid_y)) / n_samples])
 
-        data.append({'pid': pid, 'tracker': et.value, 'target_id': row.target,
+        data.append({'pid': pid, 'tracker': et_lbl, 'target_id': row.target,
                      'target_x': target_x, 'target_y': target_y,
                      'target_x_deg': target_x_deg, 'target_y_deg': target_y_deg,
                      'eccentricity': np.round(target_eccentricity),
@@ -139,9 +140,9 @@ metrics = {"acc": 'Accuracy (deg)',
            "std": 'Precision (STD, deg)',
            "data_loss": 'Data Loss (%)'}
 metric_fields = list(metrics.keys())
-for et in df_res.tracker.unique():
+for et_lbl in df_res.tracker.unique():
     df_et = (
-        df_res.loc[df_res["tracker"] == et,
+        df_res.loc[df_res["tracker"] == et_lbl,
                    ["target_x_deg", "target_y_deg", *metric_fields]]
         .groupby(["target_x_deg", "target_y_deg"], as_index=False)[metric_fields]
         .mean()
@@ -166,13 +167,13 @@ for et in df_res.tracker.unique():
     axs[0, 0].set_ylabel("Vertical position (deg)")
     axs[1, 0].set_ylabel("Vertical position (deg)")
     plt.tight_layout()
-    fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et}.png', dpi=300, bbox_inches='tight')
+    fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et_lbl}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 # make plots showing values for each point, per participant, per eye tracker
-for et in df_res.tracker.unique():
+for et_lbl in df_res.tracker.unique():
     for pid in df_res.pid.unique():
-        df_et_pid = df_res.loc[(df_res["tracker"] == et) & (df_res["pid"] == pid),
+        df_et_pid = df_res.loc[(df_res["tracker"] == et_lbl) & (df_res["pid"] == pid),
                                ["target_x_deg", "target_y_deg", "acc_x", "acc_y", *metric_fields]]
         if df_et_pid.empty:
             continue
@@ -207,5 +208,5 @@ for et in df_res.tracker.unique():
         axs[0, 0].set_ylabel("Vertical position (deg)")
         axs[1, 0].set_ylabel("Vertical position (deg)")
         plt.tight_layout()
-        fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et}_{pid}.png', dpi=300, bbox_inches='tight')
+        fig.savefig(plot_dir / f'{naming.station1_1_prefix}{et_lbl}_{pid}.png', dpi=300, bbox_inches='tight')
         plt.close(fig)

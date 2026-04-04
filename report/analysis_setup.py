@@ -8,7 +8,7 @@ gazeMapper_project_names = {1: 'gazeMapper_station1', 2: 'gazeMapper_station2'}
 
 # eye tracker info
 eye_trackers = json.load(pathlib.Path("eye_trackers.json"))
-eye_trackers = {eyetracker.EyeTracker(k): v for k, v in eye_trackers.items()}
+eye_trackers = {((eyetracker.EyeTracker(kk[0]),None) if len(kk:=k.split('.'))==1 else (eyetracker.EyeTracker(kk[0]),kk[1])): v for k, v in eye_trackers.items()}
 
 # station 1
 ## 1. Head-fixed grid fixation

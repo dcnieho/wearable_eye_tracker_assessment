@@ -153,7 +153,12 @@ def get_et_info_from_recordings(data_dir, et_override_table, only_station:int|No
             et_info = pd.concat([et_info, this_info], ignore_index=True)
     if et_info is None:
         raise RuntimeError(f'No eye tracker info files found for station {only_station if only_station is not None else ""} in data directory')
-    et_info['device'] = et_info['device'].apply(lambda d: eyetracker.EyeTracker(d))
+
+    def _get_key(k: str):
+        kk = k.split('.')
+        return (eyetracker.EyeTracker(kk[0]), None) if len(kk) == 1 else (eyetracker.EyeTracker(kk[0]), kk[1])
+    et_info['device'] = et_info['device'].apply(_get_key)
+
     et_info = (et_info
         .groupby('device', sort=False)
         .agg(
@@ -167,6 +172,7 @@ def get_et_info_from_recordings(data_dir, et_override_table, only_station:int|No
         et_data = et_override_table.get(et, {})
         for key in et_data:
             et_info[et][key] = et_data[key]
+    et_info = {k[0].value if k[1] is None else f'{k[0].value}.{k[1]}': v for k, v in et_info.items()}  # convert keys to labels
     et_info = pd.DataFrame.from_dict(et_info, orient='index')
     # order columns
     cols = ['name', 'weight', 'sample_rate', 'firmware_version', 'recording_software_version']

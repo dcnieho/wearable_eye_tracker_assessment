@@ -43,10 +43,10 @@ for s in sessions:
     if et_rec.name not in s.recordings:
         print(f'No eye tracker recording in "{rec_dir}", skipping...')
         continue
-    et  = s.recordings[et_rec.name].info.eye_tracker
+    et  = (s.recordings[et_rec.name].info.eye_tracker, s.recordings[et_rec.name].info.eye_tracker_name or None)
     pid = s.name.split('_')[0]
-    et_nm = et.value
-    et_infos[(pid, et_nm)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
+    et_lbl = et[0].value if et[1] is None else f'{et[0].value}.{et[1]}'
+    et_infos[(pid, et_lbl)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     if not (gaze_data_file:=rec_dir/gt_naming.gaze_data_fname).is_file():
         print(f'The gaze data file "{gaze_data_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
@@ -130,7 +130,7 @@ for s in sessions:
                                  np.sum(np.isnan(target_gaze.gaze_pos_vid_y)) / n_samples])
 
             # store
-            data.append({'pid': pid, 'tracker': et_nm, 'distance': distance,
+            data.append({'pid': pid, 'tracker': et_lbl, 'distance': distance,
                          'target_id': row.target, 'target_x': target_x, 'target_y': target_y,
                          'target_x_deg': target_x_deg, 'target_y_deg': target_y_deg,
                          'shift_x': row.acc_x, 'shift_y': row.acc_y,
@@ -159,7 +159,7 @@ for s in sessions:
     axs[0, 0].set_ylabel("Vertical position (deg)")
     axs[1, 0].set_ylabel("Vertical position (deg)")
     plt.tight_layout()
-    fig.savefig(plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png', dpi=300, bbox_inches='tight')
+    fig.savefig(plot_dir / f'{naming.station2_2_prefix}{et_lbl}_{pid}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 # make into data frame and store
@@ -184,13 +184,13 @@ shift_df = pd.DataFrame({'shift_x': pivot_x[diff_dists[0]] - pivot_x[diff_dists[
 shift_df_avg = shift_df.groupby(['tracker','target_id'])[['shift_x', 'shift_y']].median().reset_index()
 
 # plot, lines per participant and average (median) across participants
-for et_nm in shift_df_avg.tracker.unique():
+for et_lbl in shift_df_avg.tracker.unique():
     fig = plt.figure()
     plt.axis((-14, 14, -14, 14))
     plt.plot(df_target['x_deg'], df_target['y_deg'], 'bo', zorder=1)  # plot target locations (NB: target positions in deg are the same for all distances)
 
-    df_et     = shift_df    [(shift_df    .tracker==et_nm)]
-    df_et_avg = shift_df_avg[(shift_df_avg.tracker==et_nm)]
+    df_et     = shift_df    [(shift_df    .tracker==et_lbl)]
+    df_et_avg = shift_df_avg[(shift_df_avg.tracker==et_lbl)]
 
     for i, row in df_et.iterrows():
         target_x_deg, target_y_deg = df_target.loc[row.target_id, ['x_deg', 'y_deg']]
@@ -204,5 +204,5 @@ for et_nm in shift_df_avg.tracker.unique():
     plt.ylabel('Vertical gaze position (deg)')
     fig.gca().invert_yaxis()
     fig.gca().set_aspect('equal', adjustable='box')
-    fig.savefig(plot_dir / f'{naming.station2_2_prefix}{et_nm}.png', dpi=300, bbox_inches='tight')
+    fig.savefig(plot_dir / f'{naming.station2_2_prefix}{et_lbl}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)

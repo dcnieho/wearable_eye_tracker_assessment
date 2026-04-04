@@ -20,10 +20,9 @@ custom_cmap_fs  = utils.custom_colormap(analysis_setup.colors_fs)
 
 ets = {e: et_info_s1.loc[e,'name'] for e in et_info_s1.index} | {e: et_info_s2.loc[e,'name'] for e in et_info_s2.index}
 for et in ets:
-    et_nm = et.value
-    print(f'Generating report for {et_nm}...')
+    print(f'Generating report for {et}...')
 
-    doc = utils.BookmarkedDocTemplate(f"report_{et_nm}.pdf", pagesize=A4)
+    doc = utils.BookmarkedDocTemplate(f"report_{et}.pdf", pagesize=A4)
     elements = []
 
     elements.append(Paragraph(f"Detailed performance report for {ets[et]}", utils.CenteredHeading1))
@@ -51,7 +50,7 @@ for et in ets:
                 zebra=True),
             Paragraph("Table 1. Tested eye tracker (Station 1)", utils.APA_TableCaption)]))
 
-        fig1_1_fname = plot_dir / f'{naming.station1_1_prefix}{et_nm}.png'
+        fig1_1_fname = plot_dir / f'{naming.station1_1_prefix}{et}.png'
         if not fig1_1_fname.is_file():
             print("No data found for Station 1, task 1 (fixation grid), skipping...")
         else:
@@ -65,7 +64,7 @@ for et in ets:
                 )]))
 
             df_fixation = pd.read_csv(data_dir/naming.station1_1, delimiter='\t')
-            D = df_fixation[df_fixation.tracker==et_nm].groupby(by = ['pid','ring']).mean(numeric_only=True)
+            D = df_fixation[df_fixation.tracker==et].groupby(by = ['pid','ring']).mean(numeric_only=True)
             D = D[['acc', 'rms', 'std', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
 
             colors = {c: custom_cmap for c in ['acc', 'rms', 'std', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
@@ -90,7 +89,7 @@ for et in ets:
                 accuracy, the position of the individual fixations is also shown.", utils.styles["BodyText"])
 
             for pid in df_fixation.pid.unique():
-                f_name = plot_dir / f'{naming.station1_1_prefix}{et_nm}_{pid}.png'
+                f_name = plot_dir / f'{naming.station1_1_prefix}{et}_{pid}.png'
                 if not f_name.is_file():
                     continue
                 img = utils.auto_image(f_name)
@@ -101,7 +100,7 @@ for et in ets:
                     elements.append(img)
             elements.append(PageBreak())
 
-        fig1_2_fname = plot_dir / f'{naming.station1_2_prefix}{et_nm}.png'
+        fig1_2_fname = plot_dir / f'{naming.station1_2_prefix}{et}.png'
         if not fig1_2_fname.is_file():
             print("No data found for Station 1, task 2 (PSA), skipping...")
         else:
@@ -115,7 +114,7 @@ for et in ets:
                 )]))
 
             df_PSA = pd.read_csv(data_dir/naming.station1_2, delimiter='\t')
-            D = df_PSA[df_PSA.tracker==et_nm].groupby(by = ['pid', 'target location']).mean(numeric_only=True)
+            D = df_PSA[df_PSA.tracker==et].groupby(by = ['pid', 'target location']).mean(numeric_only=True)
             D = D[['offset_total', 'pd_diff', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
 
             colors = {c: custom_cmap for c in ['offset_total', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
@@ -141,7 +140,7 @@ for et in ets:
                 values to downward (x) or rightward (y) offsets.", utils.styles["BodyText"])
 
             for pid in df_PSA.pid.unique():
-                f_name = plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png'
+                f_name = plot_dir / f'{naming.station1_2_prefix}{et}_{pid}.png'
                 if not f_name.is_file():
                     continue
                 img = utils.auto_image(f_name)
@@ -177,7 +176,7 @@ for et in ets:
         else:
             # 2.1 Slippage
             df_slippage = pd.read_csv(data_dir/naming.station2_1, delimiter='\t')
-            D = df_slippage[df_slippage.tracker==et_nm].groupby(by = ['pid', 'trial']).mean(numeric_only=True)
+            D = df_slippage[df_slippage.tracker==et].groupby(by = ['pid', 'trial']).mean(numeric_only=True)
             D = D[['shift_x', 'shift_y', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
             D = D.replace(analysis_setup.slippage_trials).rename(columns={'trial': 'slippage direction'})
 
@@ -203,7 +202,7 @@ for et in ets:
                 or up-and-down.", utils.styles["BodyText"])
 
             for pid in df_slippage.pid.unique():
-                f_name = plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png'
+                f_name = plot_dir / f'{naming.station2_1_prefix}{et}_{pid}.png'
                 if not f_name.is_file():
                     continue
                 img = utils.auto_image(f_name)
@@ -215,7 +214,7 @@ for et in ets:
             elements.append(PageBreak())
 
         # 2.2 parallax
-        fig2_2_fname = plot_dir / f'{naming.station2_2_prefix}{et_nm}.png'
+        fig2_2_fname = plot_dir / f'{naming.station2_2_prefix}{et}.png'
         if not fig2_2_fname.is_file():
             print("No data found for Station 2, task 2 (Parallax), skipping...")
         else:
@@ -232,7 +231,7 @@ for et in ets:
             df_parallax = pd.read_csv(data_dir/naming.station2_2, delimiter='\t')
 
             # as per summary card, this is done in multiple steps
-            D = df_parallax[df_parallax.tracker==et_nm].groupby(by = ['pid', 'distance', 'target_id']).mean(numeric_only=True).reset_index(level='distance')
+            D = df_parallax[df_parallax.tracker==et].groupby(by = ['pid', 'distance', 'target_id']).mean(numeric_only=True).reset_index(level='distance')
             # compute parallax between the two distances
             D2 = D[D['distance']==diff_dists[0]][cols] - D[D['distance']==diff_dists[1]][cols]
             # for other measures, average over distances
@@ -266,7 +265,7 @@ for et in ets:
                 (apparent gaze shifts between viewing distances {diff_dists[0]} cm and {diff_dists[1]} cm).", utils.styles["BodyText"])
 
             for pid in df_slippage.pid.unique():
-                f_name = plot_dir / f'{naming.station2_2_prefix}{et_nm}_{pid}.png'
+                f_name = plot_dir / f'{naming.station2_2_prefix}{et}_{pid}.png'
                 if not f_name.is_file():
                     continue
                 img = utils.auto_image(f_name)

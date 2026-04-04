@@ -38,10 +38,10 @@ for s in sessions:
     if et_rec.name not in s.recordings:
         print(f'No eye tracker recording in "{rec_dir}", skipping...')
         continue
-    et  = s.recordings[et_rec.name].info.eye_tracker
+    et  = (s.recordings[et_rec.name].info.eye_tracker, s.recordings[et_rec.name].info.eye_tracker_name or None)
     pid = s.name.split('_')[0]
-    et_nm = et.value
-    et_infos[(pid, et_nm)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
+    et_lbl = et[0].value if et[1] is None else f'{et[0].value}.{et[1]}'
+    et_infos[(pid, et_lbl)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     # check required files are present, and load
     if not (offsets_file:=rec_dir/f'{gm_naming.gaze_offset_prefix}{analysis_setup.slippage_offset_suffix}.tsv').is_file():
@@ -121,11 +121,11 @@ for s in sessions:
         data_loss = np.mean([np.sum(np.isnan(trial_raw_gaze.gaze_pos_vid_x)) / n_samples,
                              np.sum(np.isnan(trial_raw_gaze.gaze_pos_vid_y)) / n_samples])
 
-        data.append({'pid': pid, 'tracker': et_nm, 'trial': trial,
+        data.append({'pid': pid, 'tracker': et_lbl, 'trial': trial,
                      'shift_x': rx, 'shift_y': ry,
                      'Fs': measured_Fs, 'relative_Fs': percent_Fs * 100, 'data_loss': data_loss * 100})
     # store figure
-    fig.savefig(plot_dir / f'{naming.station2_1_prefix}{et_nm}_{pid}.png', dpi=300, bbox_inches='tight')
+    fig.savefig(plot_dir / f'{naming.station2_1_prefix}{et_lbl}_{pid}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 # make into data frame and store

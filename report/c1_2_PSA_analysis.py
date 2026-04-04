@@ -37,10 +37,10 @@ for s in sessions:
     if et_rec.name not in s.recordings:
         print(f'No eye tracker recording in "{rec_dir}", skipping...')
         continue
-    et  = s.recordings[et_rec.name].info.eye_tracker
+    et  = (s.recordings[et_rec.name].info.eye_tracker, s.recordings[et_rec.name].info.eye_tracker_name or None)
     pid = s.name.split('_')[0]
-    et_nm = et.value
-    et_infos[(pid, et.value)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
+    et_lbl = et[0].value if et[1] is None else f'{et[0].value}.{et[1]}'
+    et_infos[(pid, et_lbl)] = {k: getattr(s.recordings[et_rec.name].info,k) for k in ['firmware_version', 'recording_software_version']}
 
     offsets_file = rec_dir/naming.PSA_offsets
     if not offsets_file.is_file():
@@ -98,7 +98,7 @@ for s in sessions:
         lost = np.mean([np.sum(np.isnan(offsets[idx].gaze_pos_vid_x)) / n_samples,
                         np.sum(np.isnan(offsets[idx].gaze_pos_vid_y)) / n_samples])
 
-        data.append({'pid': pid, 'tracker': et_nm,
+        data.append({'pid': pid, 'tracker': et_lbl,
                      'target id': target_id, 'target location': target_location_name, 'trial': k,
 
                      'offset_bright_x': offset_bright_x,
@@ -154,7 +154,7 @@ for s in sessions:
     plt.xlabel('Time (s)')
     plt.ylabel('Gaze offset (deg)')
     plt.title(f'{pid}')
-    fig.savefig(plot_dir / f'{naming.station1_2_prefix}{et_nm}_{pid}.png', dpi=300, bbox_inches='tight')
+    fig.savefig(plot_dir / f'{naming.station1_2_prefix}{et_lbl}_{pid}.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 # make into data frame and store
@@ -172,12 +172,12 @@ et_info.to_csv(data_dir / f'{naming.station1_prefix}eye_tracker_info.tsv', index
 
 # Plot PSA vectors for all participant in one plot, per eye tracker and target
 df_res_avg = df_res.groupby(['pid', 'tracker', 'target id'])[['offset_dark_bright_x','offset_dark_bright_y']].median().reset_index()
-for et_nm in df_res_avg.tracker.unique():
+for et_lbl in df_res_avg.tracker.unique():
     plt.figure()
     for location in df_res_avg['target id'].unique():
-        shift_x = np.array(df_res_avg[(df_res_avg.tracker==et_nm) &\
+        shift_x = np.array(df_res_avg[(df_res_avg.tracker==et_lbl) &\
                                       (df_res_avg['target id']==location)].offset_dark_bright_x)
-        shift_y = np.array(df_res_avg[(df_res_avg.tracker==et_nm) &\
+        shift_y = np.array(df_res_avg[(df_res_avg.tracker==et_lbl) &\
                                       (df_res_avg['target id']==location)].offset_dark_bright_y)
         plt.plot(analysis_setup.PSA_target_locations[location][0], analysis_setup.PSA_target_locations[location][1], 'bo')
         for k in np.arange(len(shift_x)):
@@ -193,5 +193,5 @@ for et_nm in df_res_avg.tracker.unique():
     # plt.legend()
     plt.xlabel('Horizontal apparent shift (deg)')
     plt.ylabel('Vertical apparent shift (deg)')
-    plt.savefig(plot_dir / f'{naming.station1_2_prefix}{et_nm}.png', dpi=300, bbox_inches='tight')
+    plt.savefig(plot_dir / f'{naming.station1_2_prefix}{et_lbl}.png', dpi=300, bbox_inches='tight')
     plt.close()

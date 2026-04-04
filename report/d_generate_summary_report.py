@@ -108,7 +108,7 @@ else:
 
     colors = {c: custom_cmap for c in ['acc', 'rms', 'std', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
     colors_limits = utils.get_color_limits(D, {'acc': analysis_setup.fixation_acc_lim, 'rms': analysis_setup.rms_lim, 'std': analysis_setup.std_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['acc'], analysis_setup.fixation_acc_percentiles)
-    first_col = {et.value: (et_info.loc[et,'name'], f'(N={n_participants[et.value]})') for et in et_info.index if et.value in n_participants}
+    first_col = {et: (et_info.loc[et,'name'], f'(N={n_participants[et]})') for et in et_info.index if et in n_participants}
 
     elements.append(KeepTogether([
         Paragraph("Station 1", utils.styles["Heading3"]),
@@ -133,7 +133,7 @@ else:
 
     colors = {c: custom_cmap for c in ['offset_total', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
     colors_limits = utils.get_color_limits(D, {'offset_total': analysis_setup.PSA_acc_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['offset_total'], analysis_setup.PSA_acc_percentiles)
-    first_col = {et.value: (et_info.loc[et,'name'], f'(N={n_participants[et.value]})') for et in et_info.index if et.value in n_participants}
+    first_col = {et: (et_info.loc[et,'name'], f'(N={n_participants[et]})') for et in et_info.index if et in n_participants}
 
     elements.append(KeepTogether([
         Paragraph("Table 3: Apparent gaze shift due to pupil size changes (averaged across participants).", utils.APA_TableCaption),
@@ -161,7 +161,7 @@ else:
 
     colors = {c: custom_cmap for c in ['shift_x', 'shift_y', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
     colors_limits = utils.get_color_limits(D, {'shift_x': analysis_setup.slippage_acc_lim, 'shift_y': analysis_setup.slippage_acc_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['shift_x','shift_y'], analysis_setup.slippage_acc_percentiles)
-    first_col = {et.value: (et_info.loc[et,'name'], f'(N={n_participants[et.value]})') for et in et_info.index if et.value in n_participants}
+    first_col = {et: (et_info.loc[et,'name'], f'(N={n_participants[et]})') for et in et_info.index if et in n_participants}
 
     elements.append(KeepTogether([
         Paragraph("Station 2", utils.styles["Heading3"]),
@@ -199,7 +199,7 @@ else:
 
     colors = {c: custom_cmap for c in ['shift', 'shift_x', 'shift_y', 'data_loss']} | {'relative_Fs': custom_cmap_fs}
     colors_limits = utils.get_color_limits(D, {'shift': analysis_setup.parallax_acc_lim, 'shift_x': analysis_setup.parallax_acc_lim, 'shift_y': analysis_setup.parallax_acc_lim, 'data_loss': analysis_setup.loss_lim, 'relative_Fs': analysis_setup.fs_lim}, ['shift', 'shift_x', 'shift_y'], analysis_setup.parallax_acc_percentiles, need_abs=['shift_x', 'shift_y'])
-    first_col = {et.value: f'{et_info.loc[et,"name"]}\n(N={n_participants[et.value]})' for et in et_info.index if et.value in n_participants}
+    first_col = {et: f'{et_info.loc[et,"name"]}\n(N={n_participants[et]})' for et in et_info.index if et in n_participants}
 
     elements.append(KeepTogether([
         Paragraph(f"Table 5. Parallax errors (apparent gaze shifts between viewing \
