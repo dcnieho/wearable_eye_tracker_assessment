@@ -66,9 +66,8 @@ for s in sessions:
         a.set_ylim(-20, +20)    # Y-axis range
         a.invert_yaxis()
 
-    # process slippage trials in sorted value order, so they appear in the plots and tables in the same order
-    slippage_trial_items = sorted(analysis_setup.slippage_trials.items(), key=lambda x: x[1])
-    for i, (trial, _) in enumerate(slippage_trial_items):
+    # process slippage trials
+    for i, (trial, _) in enumerate(analysis_setup.slippage_trials.items()):
         if trial not in coding:
             print(f'No coding for trial type "{trial}" in session "{s.name}", skipping...')
             continue
