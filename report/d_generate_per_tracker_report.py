@@ -65,7 +65,7 @@ for et in ets:
                     utils.APA_FigureCaption
                 )]))
 
-            df_fixation = pd.read_csv(data_dir/naming.station1_1, delimiter='\t')
+            df_fixation = pd.read_csv(data_dir/naming.station1_1, delimiter='\t', dtype={'pid': str})   # ensure pid column is a string
             D = df_fixation[df_fixation.tracker==et].groupby(by = ['pid','ring']).mean(numeric_only=True)
             D = D[['acc', 'rms', 'std', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
 
@@ -115,7 +115,7 @@ for et in ets:
                     utils.APA_FigureCaption
                 )]))
 
-            df_PSA = pd.read_csv(data_dir/naming.station1_2, delimiter='\t')
+            df_PSA = pd.read_csv(data_dir/naming.station1_2, delimiter='\t', dtype={'pid': str})   # ensure pid column is a string
             D = df_PSA[df_PSA.tracker==et].groupby(by = ['pid', 'target location']).mean(numeric_only=True)
             D = D[['offset_total', 'pd_diff', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
 
@@ -174,7 +174,7 @@ for et in ets:
             print("No data found for Station 2, task 1 (Slippage), skipping...")
         else:
             # 2.1 Slippage
-            df_slippage = pd.read_csv(data_dir/naming.station2_1, delimiter='\t')
+            df_slippage = pd.read_csv(data_dir/naming.station2_1, delimiter='\t', dtype={'pid': str})   # ensure pid column is a string
             D = df_slippage[df_slippage.tracker==et].groupby(by = ['pid', 'trial']).mean(numeric_only=True)
             D = D[['shift_x', 'shift_y', 'Fs', 'relative_Fs', 'data_loss']].reset_index()
             D = D.replace(analysis_setup.slippage_trials).rename(columns={'trial': 'slippage direction'})
@@ -227,7 +227,7 @@ for et in ets:
 
             diff_dists = [analysis_setup.parallax_distances[0], analysis_setup.parallax_distances[-1]]
             cols = ['shift_x', 'shift_y']
-            df_parallax = pd.read_csv(data_dir/naming.station2_2, delimiter='\t')
+            df_parallax = pd.read_csv(data_dir/naming.station2_2, delimiter='\t', dtype={'pid': str})   # ensure pid column is a string
 
             # as per summary card, this is done in multiple steps
             D = df_parallax[df_parallax.tracker==et].groupby(by = ['pid', 'distance', 'target_id']).mean(numeric_only=True).reset_index(level='distance')
@@ -263,7 +263,7 @@ for et in ets:
                 offset for each fixation target at each viewing distance, along with the parallax error \
                 (apparent gaze shifts between viewing distances {diff_dists[0]} cm and {diff_dists[1]} cm).", utils.styles["BodyText"])
 
-            for pid in df_slippage.pid.unique():
+            for pid in df_parallax.pid.unique():
                 f_name = plot_dir / f'{naming.station2_2_prefix}{et}_{pid}.png'
                 if not f_name.is_file():
                     continue
