@@ -124,7 +124,7 @@ for s in sessions:
 
 # make into data frame and store
 if not data:
-    print('No data collected, not performing further station 2 slippage analysis.')
+    print('No data collected, not performing further station 1 fixation analysis.')
     exit(0)
 df_res = pd.DataFrame.from_records(data)
 df_res.to_csv(data_dir / naming.station1_1, index=False, sep='\t', na_rep='nan', float_format='%.8f')
