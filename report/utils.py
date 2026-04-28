@@ -152,7 +152,7 @@ def get_et_info_from_recordings(data_dir, et_override_table, only_station:int|No
         else:
             et_info = pd.concat([et_info, this_info], ignore_index=True)
     if et_info is None:
-        raise RuntimeError(f'No eye tracker info files found for station {only_station if only_station is not None else ""} in data directory')
+        return None
 
     def _get_key(k: str):
         kk = k.split('.')

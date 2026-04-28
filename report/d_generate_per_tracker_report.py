@@ -13,12 +13,14 @@ plot_dir = pathlib.Path('figures')
 # get eye tracker info
 et_info_s1 = utils.get_et_info_from_recordings(data_dir, analysis_setup.eye_trackers, only_station=1)
 et_info_s2 = utils.get_et_info_from_recordings(data_dir, analysis_setup.eye_trackers, only_station=2)
+if et_info_s1 is None and et_info_s2 is None:
+    raise RuntimeError(f'No eye tracker info files found for station 1 or 2 in data directory')
 
 # other setup
 custom_cmap     = utils.custom_colormap(analysis_setup.colors)
 custom_cmap_fs  = utils.custom_colormap(analysis_setup.colors_fs)
 
-ets = {e: et_info_s1.loc[e,'name'] for e in et_info_s1.index} | {e: et_info_s2.loc[e,'name'] for e in et_info_s2.index}
+ets = ({} if et_info_s1 is None else {e: et_info_s1.loc[e,'name'] for e in et_info_s1.index}) | ({} if et_info_s2 is None else {e: et_info_s2.loc[e,'name'] for e in et_info_s2.index})
 for et in ets:
     print(f'Generating report for {et}...')
 
@@ -35,7 +37,7 @@ for et in ets:
             utils.styles["BodyText"])])
 
     # Results station 1
-    if et in et_info_s1.index:
+    if et_info_s1 is not None and et in et_info_s1.index:
         elements.append(Paragraph("Station 1", utils.styles["Heading2"]),)
 
         elements.append(Paragraph("Information about the recordings collected for Station 1:", utils.styles["BodyText"]))
@@ -153,7 +155,7 @@ for et in ets:
 
 
     # Results station 2
-    if et in et_info_s2.index:
+    if et_info_s2 is not None and et in et_info_s2.index:
         elements.append(Paragraph("Station 2", utils.styles["Heading2"]),)
 
         elements.append(Paragraph("Information about the recordings collected for Station 2:", utils.styles["BodyText"]))

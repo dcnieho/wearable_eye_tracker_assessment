@@ -11,6 +11,8 @@ data_dir = pathlib.Path('data')
 
 # get eye tracker info
 et_info = utils.get_et_info_from_recordings(data_dir, analysis_setup.eye_trackers)
+if et_info is None:
+    raise RuntimeError(f'No eye tracker info files found for station 1 or 2 in data directory')
 
 # other setup
 custom_cmap     = utils.custom_colormap(analysis_setup.colors)
