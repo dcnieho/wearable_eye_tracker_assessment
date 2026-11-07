@@ -1,7 +1,7 @@
 import pandas as pd
 
 import analysis_setup, naming, point_fiducial_detector
-from gazeMapper import config, episode, naming as gm_naming, plane, session
+from gazeMapper import config, episode, marker_assembly, naming as gm_naming, session
 from glassesTools import annotation, eyetracker, naming as gt_naming, pose, process_pool, propagating_thread, timestamps
 from glassesTools.validation.config import get_validation_setup
 from glassesTools.gui.video_player import GUI
@@ -20,7 +20,7 @@ def do_the_work(gui: GUI | None):
     et_rec = et_recs[0]
 
     # get validation setup
-    val_planes = [p for p in study_config.planes if p.type==plane.Type.GlassesValidator]
+    val_planes = [p for p in study_config.marker_assemblies if p.type==marker_assembly.Type.GlassesValidator]
     if len(val_planes)!=1:
         raise RuntimeError('A project with one GlassesValidator plane is expected')
     val_plane = val_planes[0]
@@ -86,7 +86,7 @@ def do_the_work(gui: GUI | None):
         poses, _, extra = estimator.process_video()
 
         # store pose
-        pose.write_list_to_file(poses['fiducials'], pose_file, skip_failed=True)
+        pose.write_plane_list_to_file(poses['fiducials'], pose_file, skip_failed=True)
         # handle targets
         targets = [[t[0], t_id]+t[1][t_id] for t in extra['target'] for t_id in t[1]]
         targets = pd.DataFrame(targets,columns=['frame_idx','t_id','t_img_x','t_img_y','t_screen_x','t_screen_y'])

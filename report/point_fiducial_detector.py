@@ -1,6 +1,7 @@
 import numpy as np
 import open3d as o3d
 import cv2
+import typing
 
 import utils
 from glassesTools import drawing, ocv, pose, transforms
@@ -42,24 +43,27 @@ class Detector:
 
         self._det_cache: tuple[int,tuple|None] = None
 
-    def detect_plane(self, plane_name: str, frame_idx: int, frame: np.ndarray, camera_parameters: ocv.CameraParams) -> tuple[np.ndarray, np.ndarray]:
-        _,_,_,iX,iY,correspondence,_ = self._get_detector_cache(frame_idx, frame, camera_parameters)
+    def detect_plane(self, plane_name: str, frame_idx: int, frame: np.ndarray, frame_info: dict[str, typing.Any], camera_parameters: ocv.CameraParams) -> pose.DetectionResult|None:
+        _,_,_,iX,iY,correspondence,_ = self._get_detector_cache(frame_idx, frame, frame_info, camera_parameters)
         if correspondence is None:
-            return None, None
-        # return image points and matching world points
-        return self._get_plane_matching_image_points(iX, iY, correspondence, as_mm=True)
+            return None
+        # get image points and matching world points
+        obj, img = self._get_plane_matching_image_points(iX, iY, correspondence, as_mm=True)
+        if obj is None or img is None:
+            return None
+        return pose.DetectionResult(obj, img, camera_parameters, frame_info)
 
-    def detect_target(self, fun_name: str, frame_idx: int, frame: np.ndarray, camera_parameters: ocv.CameraParams) -> dict[int,list]:
-        target_locations = self._get_detector_cache(frame_idx, frame, camera_parameters)[-1]
+    def detect_target(self, fun_name: str, frame_idx: int, frame: np.ndarray, frame_info: dict[str, typing.Any], camera_parameters: ocv.CameraParams) -> dict[int,list]:
+        target_locations = self._get_detector_cache(frame_idx, frame, frame_info, camera_parameters)[-1]
         if target_locations is None:
             return None
         return {t_id:target_locations[t_id][:2]+self.targets[t_id] for t_id in target_locations}
 
-    def detect_bright_frame(self, fun_name: str, frame_idx: int, frame: np.ndarray, camera_parameters: ocv.CameraParams) -> bool:
-        return self._get_detector_cache(frame_idx, frame, camera_parameters)[0]
+    def detect_bright_frame(self, fun_name: str, frame_idx: int, frame: np.ndarray, frame_info: dict[str, typing.Any], camera_parameters: ocv.CameraParams) -> bool:
+        return self._get_detector_cache(frame_idx, frame, frame_info, camera_parameters)[0]
 
-    def visualize_plane(self, plane_name: str, frame_idx: int, frame: np.ndarray, plane_points: np.ndarray):
-        _,contours,_,iX,iY,correspondence,_ = self._get_detector_cache(frame_idx, None, None)
+    def visualize_plane(self, plane_name: str, frame_idx: int, frame: np.ndarray, frame_info: dict[str,typing.Any], plane_points: np.ndarray):
+        _,contours,_,iX,iY,correspondence,_ = self._get_detector_cache(frame_idx, None, None, None)
 
         if correspondence is None:
             if contours is None:
@@ -77,8 +81,8 @@ class Detector:
             drawing.openCVCircle(frame, (iX[c[0]], iY[c[0]]), 1, (255, 0, 0), 1, 8)
             cv2.putText(frame, str(c[1]), (int(iX[c[0]]), int(iY[c[0]])), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2, lineType=cv2.LINE_AA)
 
-    def visualize_target(self, fun_name: str, frame: np.ndarray, frame_idx: int, _: dict[int,list]):
-        target_locations = self._get_detector_cache(frame_idx, None, None)[-1]
+    def visualize_target(self, fun_name: str, frame: np.ndarray, frame_info: dict[str, typing.Any], frame_idx: int, _: dict[int,list]):
+        target_locations = self._get_detector_cache(frame_idx, None, None, None)[-1]
         if target_locations is None:
             return
         for t_id in target_locations:
@@ -87,15 +91,15 @@ class Detector:
             drawing.openCVCircle(frame, pos, 2, (0, 0, 255), 1, 8)
             cv2.putText(frame, str(t_id), (int(pos[0]), int(pos[1])), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2, lineType=cv2.LINE_AA)
 
-    def visualize_bright_frame(self, fun_name: str, frame: np.ndarray, frame_idx: int, is_bright_frame: bool):
+    def visualize_bright_frame(self, fun_name: str, frame: np.ndarray, frame_info: dict[str, typing.Any], frame_idx: int, is_bright_frame: bool):
         # identify frame as bright or dark
         cv2.putText(frame, 'bright' if is_bright_frame else 'dark', (20,20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2, lineType=cv2.LINE_AA)
 
-    def _get_detector_cache(self, frame_idx: int, frame: np.ndarray, camera_parameters: ocv.CameraParams):
+    def _get_detector_cache(self, frame_idx: int, frame: np.ndarray, frame_info: dict[str, typing.Any], camera_parameters: ocv.CameraParams):
         if self._det_cache is None or self._det_cache[0]!=frame_idx:
             if frame is None:
                 return None
-            self._det_cache = (frame_idx, self._run_detection_and_matching(frame, camera_parameters))
+            self._det_cache = (frame_idx, self._run_detection_and_matching(frame, frame_info, camera_parameters))
         return self._det_cache[1]
 
     def _get_plane_matching_image_points(self, iX, iY, correspondence, as_mm=True):
@@ -108,7 +112,7 @@ class Detector:
             imgP[i,0,:] = [iX[c[0]], iY[c[0]]]
         return objP, imgP
 
-    def _run_detection_and_matching(self, frame: np.ndarray, camera_parameters: ocv.CameraParams):
+    def _run_detection_and_matching(self, frame: np.ndarray, frame_info: dict[str, typing.Any], camera_parameters: ocv.CameraParams):
         # get points in image
         is_bright_frame, contours, areas, cX, cY = self._detect_points_for_frame(frame)
         if not contours:
@@ -174,12 +178,16 @@ class Detector:
             if correspondence is not None and has_target:
                 # get homography
                 objP, imgP = self._get_plane_matching_image_points(cX, cY, correspondence, as_mm=False)
-                n_points, H = pose.estimate_homography(objP, imgP, camera_parameters)
+                n_points, H = pose.estimate_homography(objP, imgP, frame_info, camera_parameters)
                 if n_points:
                     # use homography to get target locations on image
                     out = transforms.apply_homography(np.array([self.targets[t] for t in self.targets]), np.linalg.inv(H))
                     if camera_parameters is not None and camera_parameters.has_intrinsics():
-                        out = transforms.distort_points(out, camera_parameters)
+                        if 'offset_x' in frame_info and 'offset_y' in frame_info:
+                            ROI_offset = np.array([frame_info['offset_x'], frame_info['offset_y']])
+                        else:
+                            ROI_offset = np.array([0., 0.])
+                        out = transforms.distort_points(out, camera_parameters, ROI_offset)
                     # if we have a potential target (much larger first circle)
                     # check if any of these three locations falls within it
                     radius = np.sqrt(areas[0]/np.pi)

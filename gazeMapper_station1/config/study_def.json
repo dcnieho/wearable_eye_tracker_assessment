@@ -51,32 +51,36 @@
       "hotkey": "s",
       "auto_code": {
         "start_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 200,
-              "aruco_dict": "DICT_4X4_250"
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 200,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 201,
+                "aruco_dict": "DICT_4X4_250"
+              }
             }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 201,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
+          ]
         ],
         "end_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 201,
-              "aruco_dict": "DICT_4X4_250"
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 201,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 200,
+                "aruco_dict": "DICT_4X4_250"
+              }
             }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 200,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
+          ]
         ]
       },
       "sync_setup": {
@@ -105,39 +109,43 @@
       "name": "PSA",
       "description": "PSA test episode",
       "hotkey": "p",
-      "planes": {
-        "builtin.set": [
-          "validate"
-        ]
-      },
       "auto_code": {
         "start_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 210,
-              "aruco_dict": "DICT_4X4_250"
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 210,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 211,
+                "aruco_dict": "DICT_4X4_250"
+              }
             }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 211,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
+          ]
         ],
         "end_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 211,
-              "aruco_dict": "DICT_4X4_250"
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 211,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 210,
+                "aruco_dict": "DICT_4X4_250"
+              }
             }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 210,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
+          ]
+        ]
+      },
+      "marker_assemblies": {
+        "builtin.set": [
+          "validate"
         ]
       }
     },
@@ -146,44 +154,51 @@
       "name": "Fixation task",
       "description": "Fixation task episode",
       "hotkey": "f",
-      "planes": {
+      "auto_code": {
+        "start_markers": [
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 205,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 206,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            }
+          ]
+        ],
+        "end_markers": [
+          [
+            {
+              "__config.MarkerID__": {
+                "m_id": 206,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            },
+            {
+              "__config.MarkerID__": {
+                "m_id": 205,
+                "aruco_dict": "DICT_4X4_250"
+              }
+            }
+          ]
+        ]
+      },
+      "validation_setup": {},
+      "marker_assemblies": {
         "builtin.set": [
           "validate"
         ]
-      },
-      "auto_code": {
-        "start_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 205,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 206,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
-        ],
-        "end_markers": [
-          {
-            "__config.MarkerID__": {
-              "m_id": 206,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          },
-          {
-            "__config.MarkerID__": {
-              "m_id": 205,
-              "aruco_dict": "DICT_4X4_250"
-            }
-          }
-        ]
-      },
-      "validation_setup": {}
+      }
     }
   ],
+  "individual_marker_settings": {
+    "general": {}
+  },
   "import_do_copy_video": false,
   "import_source_dir_as_relative_path": true,
   "mapped_video_make_which": {
@@ -193,7 +208,7 @@
   },
   "mapped_video_recording_colors": {
     "et": {
-      "__config.RgbColor__": {
+      "__glassesTools.drawing.RgbColor__": {
         "r": 255,
         "g": 127,
         "b": 0

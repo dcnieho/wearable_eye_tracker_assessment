@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-import analysis_setup, naming
+import analysis_setup, naming, utils
 from gazeMapper import config, naming as gm_naming, process, session
 from glassesTools import annotation, naming as gt_naming
 from glassesTools.validation.config import get_targets, get_validation_setup
@@ -72,7 +72,7 @@ for s in sessions:
         if not (dq_file:=rec_dir/f'{gm_naming.validation_prefix}{episode_name}_data_quality.tsv').is_file():
             print(f'The data quality file "{dq_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
             continue
-        dq = pd.read_csv(dq_file, sep='\t')
+        dq = utils.read_data_quality_file(dq_file)
         if not (fixation_coding_file:=rec_dir/f'{gm_naming.validation_prefix}{episode_name}_fixation_assignment.tsv').is_file():
             print(f'The fixation assignment file "{fixation_coding_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
             continue
@@ -81,11 +81,11 @@ for s in sessions:
         # get plane for this episode
         # first find corresponding coding config
         cs = [cs for cs in val_events if cs['name']==episode_name][0]
-        if len(cs['planes'])!=1:
-            raise ValueError(f'Validation event "{episode_name}" should be coded for exactly one glassesValidator plane, found {len(cs["planes"])}')
-        p = list(cs['planes'])[0]
+        if len(cs['marker_assemblies'])!=1:
+            raise ValueError(f'Validation event "{episode_name}" should be coded for exactly one glassesValidator plane, found {len(cs["marker_assemblies"])}')
+        p = list(cs['marker_assemblies'])[0]
         # get validation setup
-        plane_defs = [pl for pl in study_config.planes if pl.name==p]
+        plane_defs = [pl for pl in study_config.marker_assemblies if pl.name==p]
         if len(plane_defs)!=1:
             raise RuntimeError(f'The GlassesValidator plane {p} is not found in the project')
         plane_def = plane_defs[0]

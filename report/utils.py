@@ -17,6 +17,13 @@ from glassesTools import eyetracker
 import naming
 
 
+def read_data_quality_file(file_path):
+    data_quality = pd.read_csv(file_path, sep='\t')
+    if not data_quality.empty and pd.isna(pd.to_numeric(data_quality.iloc[0, 0], errors='coerce')):
+        data_quality = pd.read_csv(file_path, sep='\t', skiprows=[1])
+    return data_quality
+
+
 def cart2pol(x: float, y: float) -> tuple[float,float]:
     rho = np.sqrt(x**2 + y**2)
     phi = np.arctan2(y, x)

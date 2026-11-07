@@ -5,7 +5,7 @@ import numpy as np
 import seaborn as sns
 
 import analysis_setup, utils, naming
-from gazeMapper import config, naming as gm_naming, plane, process, session
+from gazeMapper import config, naming as gm_naming, marker_assembly, process, session
 from glassesTools import annotation, naming as gt_naming
 from glassesTools.validation.config import get_targets, get_validation_setup
 
@@ -30,7 +30,7 @@ if len(et_recs)!=1:
 et_rec = et_recs[0]
 
 # get validation setup
-val_planes = [p for p in study_config.planes if p.type==plane.Type.GlassesValidator]
+val_planes = [p for p in study_config.marker_assemblies if p.type==marker_assembly.Type.GlassesValidator]
 if len(val_planes)!=1:
     raise RuntimeError('A project with one GlassesValidator plane is expected')
 val_plane = val_planes[0]
@@ -72,7 +72,7 @@ for s in sessions:
     if not (dq_file:=rec_dir/f'{gm_naming.validation_prefix}{val_event["name"]}_data_quality.tsv').is_file():
         print(f'The data quality file "{dq_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
         continue
-    dq = pd.read_csv(dq_file, sep='\t')
+    dq = utils.read_data_quality_file(dq_file)
     if not (fixation_coding_file:=rec_dir/f'{gm_naming.validation_prefix}{val_event["name"]}_fixation_assignment.tsv').is_file():
         print(f'The fixation assignment file "{fixation_coding_file.name}" does not exist for the recording in "{rec_dir}", skipping...')
         continue

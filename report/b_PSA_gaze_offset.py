@@ -3,7 +3,7 @@ import numpy as np
 from collections import defaultdict
 
 import analysis_setup, naming
-from gazeMapper import config, episode, plane, session
+from gazeMapper import config, episode, marker_assembly, session
 from glassesTools import data_types, gaze_headref, gaze_worldref, naming as gt_naming, ocv, pose, process_pool
 from glassesTools.validation.config import get_validation_setup
 from glassesTools.validation.dynamic import _get_position
@@ -19,7 +19,7 @@ if len(et_recs)!=1:
 et_rec = et_recs[0]
 
 # get validation setup
-val_planes = [p for p in study_config.planes if p.type==plane.Type.GlassesValidator]
+val_planes = [p for p in study_config.marker_assemblies if p.type==marker_assembly.Type.GlassesValidator]
 if len(val_planes)!=1:
     raise RuntimeError('A project with one GlassesValidator plane is expected')
 val_plane = val_planes[0]
@@ -54,7 +54,7 @@ for s in sessions:
     print(f'Processing session "{s.name}", recording directory "{rec_dir}"...')
 
     # load files
-    poses   = pose.read_dict_from_file(pose_file)
+    poses   = pose.read_plane_dict_from_file(pose_file)
     targets = pd.read_csv(target_file, delimiter='\t', index_col='frame_idx')
     episodes = episode.load_episodes_from_all_recordings(study_config, rec_dir)[0]
     camera_params = ocv.CameraParams.read_from_file(rec_dir/gt_naming.scene_camera_calibration_fname)
@@ -91,8 +91,7 @@ for s in sessions:
 
     # check what gaze-on-plane data we have
     dq_have = data_types.get_available_data_types(plane_gazes)
-    d_types = data_types.select_data_types_to_use([data_types.DataType.pose_vidpos_ray, data_types.DataType.pose_vidpos_homography, data_types.DataType.viewpos_vidpos_homography],
-                                                  dq_have, True)
+    d_types = data_types.select_data_types_to_use([data_types.DataType.pose_vidpos_ray, data_types.DataType.pose_vidpos_homography, data_types.DataType.viewpos_vidpos_homography], dq_have, True)
     d_type = d_types[0]  # pick first available data type
 
     # compute offsets per target
